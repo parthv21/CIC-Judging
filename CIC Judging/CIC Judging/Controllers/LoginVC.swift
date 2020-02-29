@@ -12,32 +12,55 @@ import FontAwesome_swift
 class LoginVC: UIViewController {
 
     private let phoneNumberTxtFld = UITextField()
-    private let optTxtFld = UITextField()
+    private let otpTxtFld = UITextField()
     private let submitNumberBtn = UIButton()
-    private let submitOptBtn = UIButton()
+    private let submitOtpBtn = UIButton()
     private let backBtn = UIButton()
+    private let otpStkVw = UIStackView()
+    private enum inputTags: Int {
+        case phoneNumber = 0
+        case otp = 1
+    }
+    private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+5)
+    private lazy var scrollView : UIScrollView = {
+        let view = UIScrollView(frame : .zero)
+        view.frame = self.view.bounds
+        view.contentInsetAdjustmentBehavior = .never
+        view.contentSize = contentViewSize
+        view.backgroundColor = .white
+        return view
+    }()
     
     /**
      Initial setup of LoginVC.
      */
     private func setUpView() {
         view.backgroundColor = .white
+        self.view.addSubview(scrollView)
+        registerForKeyboardNotifications()
+        let scrollViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardOnTap))
+        scrollViewTapGestureRecognizer.numberOfTapsRequired = 1
+        scrollViewTapGestureRecognizer.isEnabled = true
+        scrollViewTapGestureRecognizer.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(scrollViewTapGestureRecognizer)
     }
     
     private func makeLoginUI() {
         //CIC Logo
         let cicLogoImgVw = UIImageView(image: UIImage(named: "cic_logo"))
-        view.addSubview(cicLogoImgVw)
+        scrollView.addSubview(cicLogoImgVw)
         cicLogoImgVw.translatesAutoresizingMaskIntoConstraints = false
+        let window = UIApplication.shared.keyWindow
+        let topPadding = window?.safeAreaInsets.top ?? 50
         NSLayoutConstraint.activate([
-            cicLogoImgVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            cicLogoImgVw.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topPadding + 20),
             cicLogoImgVw.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             cicLogoImgVw.widthAnchor.constraint(equalToConstant: 130),
             cicLogoImgVw.heightAnchor.constraint(equalToConstant: 130)
         ])
         //CIC Text Logo
         let cicTextImgVw = UIImageView(image: UIImage(named: "cic_text_logo"))
-        view.addSubview(cicTextImgVw)
+        scrollView.addSubview(cicTextImgVw)
         cicTextImgVw.translatesAutoresizingMaskIntoConstraints = false
         cicTextImgVw.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
@@ -48,7 +71,7 @@ class LoginVC: UIViewController {
         ])
         //Seperator
         let seperator = UIView()
-        view.addSubview(seperator)
+        scrollView.addSubview(seperator)
         seperator.translatesAutoresizingMaskIntoConstraints = false
         seperator.backgroundColor = .black
         NSLayoutConstraint.activate([
@@ -61,7 +84,7 @@ class LoginVC: UIViewController {
         let infoLbl = UILabel()
         infoLbl.text = "Login with phone"
         infoLbl.textAlignment = .center
-        view.addSubview(infoLbl)
+        scrollView.addSubview(infoLbl)
         infoLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             infoLbl.topAnchor.constraint(equalTo: seperator.bottomAnchor, constant: 20),
@@ -72,15 +95,17 @@ class LoginVC: UIViewController {
         
         //Input stack view
         let inputStckVw = UIStackView()
+        inputStckVw.layer.borderColor = UIColor.black.cgColor
+        inputStckVw.layer.borderWidth = 1
         inputStckVw.translatesAutoresizingMaskIntoConstraints = false
         inputStckVw.axis = .vertical
         inputStckVw.distribution = .equalSpacing
-//        inputStckVw.spacing = 10
-        view.addSubview(inputStckVw)
+        inputStckVw.spacing = 10
+        scrollView.addSubview(inputStckVw)
         NSLayoutConstraint.activate([
             inputStckVw.topAnchor.constraint(equalTo: infoLbl.bottomAnchor, constant: 20),
             inputStckVw.widthAnchor.constraint(equalToConstant: 255),
-            inputStckVw.heightAnchor.constraint(equalToConstant: 250),
+//            inputStckVw.heightAnchor.constraint(equalToConstant: 110),
             inputStckVw.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
@@ -94,20 +119,23 @@ class LoginVC: UIViewController {
         phoneNumberTxtFld.layer.borderWidth = 1
         phoneNumberTxtFld.layer.borderColor = UIColor.black.cgColor
         phoneNumberTxtFld.textAlignment = .center
+        phoneNumberTxtFld.keyboardType = .phonePad
+        phoneNumberTxtFld.tag = inputTags.phoneNumber.rawValue
+        
         NSLayoutConstraint.activate([
             phoneNumberTxtFld.heightAnchor.constraint(equalToConstant: 50)
         ])
-        //OPT Field
-        let optStkVw = UIStackView()
-        inputStckVw.addArrangedSubview(optStkVw)
+        //otp Field
+        otpStkVw.isHidden = true
+        inputStckVw.addArrangedSubview(otpStkVw)
         inputStckVw.translatesAutoresizingMaskIntoConstraints = false
-        optStkVw.axis = .horizontal
-        optStkVw.distribution = .fill
+        otpStkVw.axis = .horizontal
+        otpStkVw.distribution = .fill
         NSLayoutConstraint.activate([
-            optStkVw.heightAnchor.constraint(equalToConstant: 50)
+            otpStkVw.heightAnchor.constraint(equalToConstant: 50)
         ])
         //Back Button
-        optStkVw.addArrangedSubview(backBtn)
+        otpStkVw.addArrangedSubview(backBtn)
         backBtn.translatesAutoresizingMaskIntoConstraints = false
         backBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         backBtn.setTitle(String.fontAwesomeIcon(name: .arrowAltCircleLeft), for: .normal)
@@ -116,18 +144,20 @@ class LoginVC: UIViewController {
             backBtn.widthAnchor.constraint(equalToConstant: 50),
             backBtn.heightAnchor.constraint(equalToConstant: 50)
         ])
-        //OPT Text Field
-        optStkVw.addArrangedSubview(optTxtFld)
-        optTxtFld.translatesAutoresizingMaskIntoConstraints = false
-        optTxtFld.attributedPlaceholder = NSAttributedString(string: "Enter the OPT",
+        backBtn.addTarget(self, action: #selector(hideOtp), for: .touchUpInside)
+        //otp Text Field
+        otpStkVw.addArrangedSubview(otpTxtFld)
+        otpTxtFld.translatesAutoresizingMaskIntoConstraints = false
+        otpTxtFld.attributedPlaceholder = NSAttributedString(string: "Enter the OTP",
                                                                      attributes: [NSAttributedString.Key.foregroundColor: placeHolderTxtClr])
-        optTxtFld.clipsToBounds = true
-        optTxtFld.layer.cornerRadius = 5
-        optTxtFld.layer.borderWidth = 1
-        optTxtFld.layer.borderColor = UIColor.black.cgColor
-        optTxtFld.textAlignment = .center
+        otpTxtFld.clipsToBounds = true
+        otpTxtFld.layer.cornerRadius = 5
+        otpTxtFld.layer.borderWidth = 1
+        otpTxtFld.layer.borderColor = UIColor.black.cgColor
+        otpTxtFld.textAlignment = .center
+        otpTxtFld.tag = inputTags.otp.rawValue
         NSLayoutConstraint.activate([
-            optTxtFld.heightAnchor.constraint(equalToConstant: 50)
+            otpTxtFld.heightAnchor.constraint(equalToConstant: 50)
         ])
         //Submit Number
         inputStckVw.addArrangedSubview(submitNumberBtn)
@@ -142,19 +172,22 @@ class LoginVC: UIViewController {
         NSLayoutConstraint.activate([
             submitNumberBtn.heightAnchor.constraint(equalToConstant: 40)
         ])
-        //Submit OPT
-        inputStckVw.addArrangedSubview(submitOptBtn)
-        submitOptBtn.translatesAutoresizingMaskIntoConstraints = false
-        submitOptBtn.backgroundColor = .black
-        submitOptBtn.layer.cornerRadius = 5
-        submitOptBtn.clipsToBounds = true
-        submitOptBtn.titleLabel?.font = UIFont(name: robotoBold, size: 16)
-        submitOptBtn.titleLabel?.textAlignment = .center
-        submitOptBtn.setTitle("LOGIN", for: .normal)
-        submitOptBtn.setTitleColor(.white, for: .normal)
+        submitNumberBtn.addTarget(self, action: #selector(submitNumber), for: .touchUpInside)
+        //Submit otp
+        submitOtpBtn.isHidden = true
+        inputStckVw.addArrangedSubview(submitOtpBtn)
+        submitOtpBtn.translatesAutoresizingMaskIntoConstraints = false
+        submitOtpBtn.backgroundColor = .black
+        submitOtpBtn.layer.cornerRadius = 5
+        submitOtpBtn.clipsToBounds = true
+        submitOtpBtn.titleLabel?.font = UIFont(name: robotoBold, size: 16)
+        submitOtpBtn.titleLabel?.textAlignment = .center
+        submitOtpBtn.setTitle("LOGIN", for: .normal)
+        submitOtpBtn.setTitleColor(.white, for: .normal)
         NSLayoutConstraint.activate([
-            submitNumberBtn.heightAnchor.constraint(equalToConstant: 40)
+            submitOtpBtn.heightAnchor.constraint(equalToConstant: 40)
         ])
+        submitOtpBtn.addTarget(self, action: #selector(submitOtp), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
@@ -164,5 +197,98 @@ class LoginVC: UIViewController {
         // Do any additional setup after loading the view.
         
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    func _submitNumber() {
+        otpTxtFld.becomeFirstResponder()
+        phoneNumberTxtFld.isHidden = true
+        submitNumberBtn.isHidden = true
+        submitOtpBtn.isHidden = false
+        otpStkVw.isHidden = false
+    }
+    
+    @objc func submitNumber(sender: UIButton!) {
+       //Logic to check for key
+       _submitNumber()
+    }
+    
+    func _submitOtp() {
+        print("OTP submitted")
+    }
+    
+    @objc func submitOtp(sender: UIButton!) {
+        _submitOtp()
+    }
+    
+    func _hideOtp() {
+        phoneNumberTxtFld.becomeFirstResponder()
+        phoneNumberTxtFld.isHidden = false
+        submitNumberBtn.isHidden = false
+        submitOtpBtn.isHidden = true
+        otpStkVw.isHidden = true
+    }
+    
+    @objc func hideOtp(sender: UIButton!) {
+        _hideOtp()
+    }
 }
 
+//MARK:- Extension to handle text field
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        switch textField.tag {
+        case inputTags.phoneNumber.rawValue:
+            _submitNumber()
+        case inputTags.otp.rawValue:
+            _submitOtp()
+        default:
+            break
+        }
+        
+        return true
+    }
+}
+
+//MARK:- Handling text fields hidden by keyboard
+extension LoginVC {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardAppear(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardDisappear(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+
+    @objc func onKeyboardAppear(_ notification: NSNotification) {
+        let info = notification.userInfo!
+        let rect: CGRect = info[UIResponder.keyboardFrameBeginUserInfoKey] as! CGRect
+        let kbSize = rect.size
+
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbSize.height, right: 0)
+        scrollView.contentInset = insets
+        scrollView.scrollIndicatorInsets = insets
+        
+        var aRect = self.view.frame;
+        aRect.size.height -= kbSize.height;
+
+        let activeField: UITextField? = [phoneNumberTxtFld, otpTxtFld].first { $0.isFirstResponder }
+        if let activeField = activeField {
+            if !aRect.contains(activeField.frame.origin) {
+                let scrollPoint = CGPoint(x: 0, y: activeField.frame.origin.y-kbSize.height)
+                scrollView.setContentOffset(scrollPoint, animated: true)
+            }
+        }
+    }
+
+    @objc func onKeyboardDisappear(_ notification: NSNotification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+    
+    @objc func dismissKeyboardOnTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+}
