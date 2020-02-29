@@ -8,9 +8,10 @@
 
 import UIKit
 import FontAwesome_swift
+import Firebase
 
 class LoginVC: UIViewController {
-
+    
     private let phoneNumberTxtFld = UITextField()
     private let otpTxtFld = UITextField()
     private let submitNumberBtn = UIButton()
@@ -105,7 +106,7 @@ class LoginVC: UIViewController {
         NSLayoutConstraint.activate([
             inputStckVw.topAnchor.constraint(equalTo: infoLbl.bottomAnchor, constant: 20),
             inputStckVw.widthAnchor.constraint(equalToConstant: 255),
-//            inputStckVw.heightAnchor.constraint(equalToConstant: 110),
+            //            inputStckVw.heightAnchor.constraint(equalToConstant: 110),
             inputStckVw.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         
@@ -149,7 +150,7 @@ class LoginVC: UIViewController {
         otpStkVw.addArrangedSubview(otpTxtFld)
         otpTxtFld.translatesAutoresizingMaskIntoConstraints = false
         otpTxtFld.attributedPlaceholder = NSAttributedString(string: "Enter the OTP",
-                                                                     attributes: [NSAttributedString.Key.foregroundColor: placeHolderTxtClr])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: placeHolderTxtClr])
         otpTxtFld.clipsToBounds = true
         otpTxtFld.layer.cornerRadius = 5
         otpTxtFld.layer.borderWidth = 1
@@ -189,7 +190,7 @@ class LoginVC: UIViewController {
         ])
         submitOtpBtn.addTarget(self, action: #selector(submitOtp), for: .touchUpInside)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
@@ -203,7 +204,7 @@ class LoginVC: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
-    func _submitNumber() {
+    func showOtpInput() {
         otpTxtFld.becomeFirstResponder()
         phoneNumberTxtFld.isHidden = true
         submitNumberBtn.isHidden = true
@@ -211,20 +212,7 @@ class LoginVC: UIViewController {
         otpStkVw.isHidden = false
     }
     
-    @objc func submitNumber(sender: UIButton!) {
-       //Logic to check for key
-       _submitNumber()
-    }
-    
-    func _submitOtp() {
-        print("OTP submitted")
-    }
-    
-    @objc func submitOtp(sender: UIButton!) {
-        _submitOtp()
-    }
-    
-    func _hideOtp() {
+    func showPhoneNumberInput() {
         phoneNumberTxtFld.becomeFirstResponder()
         phoneNumberTxtFld.isHidden = false
         submitNumberBtn.isHidden = false
@@ -232,13 +220,76 @@ class LoginVC: UIViewController {
         otpStkVw.isHidden = true
     }
     
+    func _submitNumber() {
+        
+        //Valid Number?
+        var phoneNumber = phoneNumberTxtFld.text ?? ""
+        let isValid = validatePhoneNumber(phoneNumber)
+        
+        if !isValid {
+            let invalidInputAlrt = makeAlert(title: "Invalid Input", message: "Please check the phone number you entered for errors.")
+            self.present(invalidInputAlrt, animated: true, completion:nil)
+        } else {
+            
+            checkIfUserRegistred(phoneNumber: String(phoneNumber.suffix(10))) { registred in
+                if !registred {
+                    let missedRegistrationAlrt = makeAlert(title: "Not Registered", message: "Please go to the front desk and register yourself before trying to login.")
+                    self.present(missedRegistrationAlrt, animated: true, completion:nil)
+                } else {
+                    if phoneNumber.count == 10 {
+                        phoneNumber = "+1\(phoneNumber)"
+                    }
+                    PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationID, error) in
+                        if let error = error {
+                            let authErrorAlrt = makeAlert(title: "Authentication Error", message: error.localizedDescription)
+                            self.present(authErrorAlrt, animated: true, completion: nil)
+                            return
+                        } else {
+                            UserDefaults.standard.set(verificationID, forKey: authVerificationID)
+                            self.showOtpInput()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @objc func submitNumber(sender: UIButton!) {
+        //Logic to check for key
+        _submitNumber()
+    }
+    
+    func _submitOtp() {
+        let verificationID = UserDefaults.standard.string(forKey: authVerificationID) ?? ""
+        let verificationCode = otpTxtFld.text ?? ""
+        let credential = PhoneAuthProvider.provider().credential(
+            withVerificationID: verificationID,
+            verificationCode: verificationCode)
+        
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if let error = error {
+                let loginErrorAlrt = makeAlert(title: "Login Error", message: error.localizedDescription)
+                self.present(loginErrorAlrt, animated: true, completion: nil)
+                return
+            }
+            let teamListVC = TeamListVC()
+            teamListVC.modalPresentationStyle = .fullScreen
+            self.present(teamListVC, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func submitOtp(sender: UIButton!) {
+        _submitOtp()
+    }
+    
     @objc func hideOtp(sender: UIButton!) {
-        _hideOtp()
+        showPhoneNumberInput()
     }
 }
 
 //MARK:- Extension to handle text field
 extension LoginVC: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
@@ -261,19 +312,19 @@ extension LoginVC {
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardAppear(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardDisappear(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
-
+    
     @objc func onKeyboardAppear(_ notification: NSNotification) {
         let info = notification.userInfo!
         let rect: CGRect = info[UIResponder.keyboardFrameBeginUserInfoKey] as! CGRect
         let kbSize = rect.size
-
+        
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbSize.height, right: 0)
         scrollView.contentInset = insets
         scrollView.scrollIndicatorInsets = insets
         
         var aRect = self.view.frame;
         aRect.size.height -= kbSize.height;
-
+        
         let activeField: UITextField? = [phoneNumberTxtFld, otpTxtFld].first { $0.isFirstResponder }
         if let activeField = activeField {
             if !aRect.contains(activeField.frame.origin) {
@@ -282,7 +333,7 @@ extension LoginVC {
             }
         }
     }
-
+    
     @objc func onKeyboardDisappear(_ notification: NSNotification) {
         scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero

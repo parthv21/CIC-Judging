@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,7 +21,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginVC()
+        
+        let userDefaults = UserDefaults.standard
+        if userDefaults.bool(forKey: hasRunBefore) == false {
+           do {
+                try Auth.auth().signOut()
+                userDefaults.set(true, forKey: hasRunBefore)
+            } catch {
+                print("Error in logging out old user")
+            }
+        }
+        
+        let user = Auth.auth().currentUser
+        if user != nil {
+            window?.rootViewController = TeamListVC()
+        } else {
+            window?.rootViewController = LoginVC()
+        }
         window?.makeKeyAndVisible()
     }
 
