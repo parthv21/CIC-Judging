@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2F08F707481E565D499AB7BE /* Pods_CIC_Judging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */; };
+		B2278109240C50C500890DC3 /* DBKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2278108240C50C500890DC3 /* DBKeys.swift */; };
+		B227810B240C606000890DC3 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810A240C606000890DC3 /* Decodables.swift */; };
 		B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32C240873E10065C20E /* AppDelegate.swift */; };
 		B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32E240873E10065C20E /* SceneDelegate.swift */; };
 		B2EEB331240873E10065C20E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB330240873E10065C20E /* LoginVC.swift */; };
@@ -40,6 +42,8 @@
 		436B50561A0311916D0E510B /* Pods-CIC Judging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIC Judging.release.xcconfig"; path = "Target Support Files/Pods-CIC Judging/Pods-CIC Judging.release.xcconfig"; sourceTree = "<group>"; };
 		48C477D53914EED48A108150 /* Pods-CIC Judging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIC Judging.debug.xcconfig"; path = "Target Support Files/Pods-CIC Judging/Pods-CIC Judging.debug.xcconfig"; sourceTree = "<group>"; };
 		A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIC_Judging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2278108240C50C500890DC3 /* DBKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBKeys.swift; sourceTree = "<group>"; };
+		B227810A240C606000890DC3 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		B2EEB329240873E10065C20E /* CIC Judging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIC Judging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2EEB32C240873E10065C20E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2EEB32E240873E10065C20E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,8 +117,8 @@
 		B2EEB32B240873E10065C20E /* CIC Judging */ = {
 			isa = PBXGroup;
 			children = (
-				B2EEB364240A1C410065C20E /* Utils */,
 				B2EEB34524087ECF0065C20E /* CIC Judging.entitlements */,
+				B2EEB364240A1C410065C20E /* Utils */,
 				B2EEB367240A25DF0065C20E /* Views */,
 				B2EEB341240878030065C20E /* Delegates */,
 				B2EEB34624097FC70065C20E /* Constants */,
@@ -151,6 +155,8 @@
 				B2EEB34724097FEF0065C20E /* Colors.swift */,
 				B2EEB34924098A880065C20E /* Fonts.swift */,
 				B2EEB370240A3ED50065C20E /* UserDefaultKeys.swift */,
+				B2278108240C50C500890DC3 /* DBKeys.swift */,
+				B227810A240C606000890DC3 /* Decodables.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -356,6 +362,8 @@
 				B2EEB366240A1C650065C20E /* Validators.swift in Sources */,
 				B2EEB34824097FEF0065C20E /* Colors.swift in Sources */,
 				B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */,
+				B2278109240C50C500890DC3 /* DBKeys.swift in Sources */,
+				B227810B240C606000890DC3 /* Decodables.swift in Sources */,
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,
 			);

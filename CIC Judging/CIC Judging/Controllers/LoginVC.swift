@@ -85,6 +85,7 @@ class LoginVC: UIViewController {
         let infoLbl = UILabel()
         infoLbl.text = "Login with phone"
         infoLbl.textAlignment = .center
+        infoLbl.textColor = .black
         scrollView.addSubview(infoLbl)
         infoLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -122,7 +123,7 @@ class LoginVC: UIViewController {
         phoneNumberTxtFld.textAlignment = .center
         phoneNumberTxtFld.keyboardType = .phonePad
         phoneNumberTxtFld.tag = inputTags.phoneNumber.rawValue
-        
+        phoneNumberTxtFld.textColor = .black
         NSLayoutConstraint.activate([
             phoneNumberTxtFld.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -157,6 +158,7 @@ class LoginVC: UIViewController {
         otpTxtFld.layer.borderColor = UIColor.black.cgColor
         otpTxtFld.textAlignment = .center
         otpTxtFld.tag = inputTags.otp.rawValue
+        otpTxtFld.textColor = .black
         NSLayoutConstraint.activate([
             otpTxtFld.heightAnchor.constraint(equalToConstant: 50)
         ])

@@ -9,3 +9,4 @@
 import Foundation
 
 let robotoBold = "Roboto-Bold"
+let robotoRegular = "Roboto-Regular"
