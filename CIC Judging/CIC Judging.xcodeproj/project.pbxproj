@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2F08F707481E565D499AB7BE /* Pods_CIC_Judging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */; };
+		B2191AA0240EAE11005E57CD /* KeyMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2191A9F240EAE11005E57CD /* KeyMaker.swift */; };
+		B2191AA2240EC418005E57CD /* FilterTeamsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2191AA1240EC418005E57CD /* FilterTeamsVC.swift */; };
+		B2191AA4240EC53A005E57CD /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2191AA3240EC53A005E57CD /* Enums.swift */; };
+		B2191AA7240EF6D5005E57CD /* LogoImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2191AA6240EF6D5005E57CD /* LogoImages.swift */; };
+		B2191AA9240EF7DC005E57CD /* AssetsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2191AA8240EF7DC005E57CD /* AssetsFetcher.swift */; };
 		B2278109240C50C500890DC3 /* DBKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2278108240C50C500890DC3 /* DBKeys.swift */; };
 		B227810B240C606000890DC3 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810A240C606000890DC3 /* Decodables.swift */; };
 		B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810D240C815E00890DC3 /* TeamInfoCell.swift */; };
@@ -43,6 +48,11 @@
 		436B50561A0311916D0E510B /* Pods-CIC Judging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIC Judging.release.xcconfig"; path = "Target Support Files/Pods-CIC Judging/Pods-CIC Judging.release.xcconfig"; sourceTree = "<group>"; };
 		48C477D53914EED48A108150 /* Pods-CIC Judging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIC Judging.debug.xcconfig"; path = "Target Support Files/Pods-CIC Judging/Pods-CIC Judging.debug.xcconfig"; sourceTree = "<group>"; };
 		A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIC_Judging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2191A9F240EAE11005E57CD /* KeyMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMaker.swift; sourceTree = "<group>"; };
+		B2191AA1240EC418005E57CD /* FilterTeamsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTeamsVC.swift; sourceTree = "<group>"; };
+		B2191AA3240EC53A005E57CD /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		B2191AA6240EF6D5005E57CD /* LogoImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImages.swift; sourceTree = "<group>"; };
+		B2191AA8240EF7DC005E57CD /* AssetsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFetcher.swift; sourceTree = "<group>"; };
 		B2278108240C50C500890DC3 /* DBKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBKeys.swift; sourceTree = "<group>"; };
 		B227810A240C606000890DC3 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		B227810D240C815E00890DC3 /* TeamInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoCell.swift; sourceTree = "<group>"; };
@@ -97,6 +107,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B2191AA5240EF6A7005E57CD /* Fetched Data */ = {
+			isa = PBXGroup;
+			children = (
+				B2191AA6240EF6D5005E57CD /* LogoImages.swift */,
+			);
+			path = "Fetched Data";
+			sourceTree = "<group>";
+		};
 		B227810C240C812D00890DC3 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				B2EEB34524087ECF0065C20E /* CIC Judging.entitlements */,
+				B2191AA5240EF6A7005E57CD /* Fetched Data */,
 				B227810C240C812D00890DC3 /* Custom Cells */,
 				B2EEB364240A1C410065C20E /* Utils */,
 				B2EEB367240A25DF0065C20E /* Views */,
@@ -147,6 +166,7 @@
 			children = (
 				B2EEB330240873E10065C20E /* LoginVC.swift */,
 				B2EEB36C240A2FBB0065C20E /* TeamListVC.swift */,
+				B2191AA1240EC418005E57CD /* FilterTeamsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -168,6 +188,7 @@
 				B2EEB370240A3ED50065C20E /* UserDefaultKeys.swift */,
 				B2278108240C50C500890DC3 /* DBKeys.swift */,
 				B227810A240C606000890DC3 /* Decodables.swift */,
+				B2191AA3240EC53A005E57CD /* Enums.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -197,6 +218,8 @@
 				B2EEB365240A1C650065C20E /* Validators.swift */,
 				B2EEB36A240A2B520065C20E /* RefCheckers.swift */,
 				B2EEB36E240A36460065C20E /* Types.swift */,
+				B2191A9F240EAE11005E57CD /* KeyMaker.swift */,
+				B2191AA8240EF7DC005E57CD /* AssetsFetcher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -364,13 +387,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2191AA9240EF7DC005E57CD /* AssetsFetcher.swift in Sources */,
 				B2EEB331240873E10065C20E /* LoginVC.swift in Sources */,
 				B2EEB36B240A2B520065C20E /* RefCheckers.swift in Sources */,
 				B2EEB36D240A2FBB0065C20E /* TeamListVC.swift in Sources */,
 				B2EEB36F240A36460065C20E /* Types.swift in Sources */,
+				B2191AA7240EF6D5005E57CD /* LogoImages.swift in Sources */,
 				B2EEB34A24098A880065C20E /* Fonts.swift in Sources */,
+				B2191AA4240EC53A005E57CD /* Enums.swift in Sources */,
 				B2EEB371240A3ED50065C20E /* UserDefaultKeys.swift in Sources */,
 				B2EEB366240A1C650065C20E /* Validators.swift in Sources */,
+				B2191AA2240EC418005E57CD /* FilterTeamsVC.swift in Sources */,
 				B2EEB34824097FEF0065C20E /* Colors.swift in Sources */,
 				B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */,
 				B2278109240C50C500890DC3 /* DBKeys.swift in Sources */,
@@ -378,6 +405,7 @@
 				B227810B240C606000890DC3 /* Decodables.swift in Sources */,
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,
+				B2191AA0240EAE11005E57CD /* KeyMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

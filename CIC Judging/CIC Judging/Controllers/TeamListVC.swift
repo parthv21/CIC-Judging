@@ -17,12 +17,14 @@ class TeamListVC: UIViewController {
     private let defaultJudegName = "Jon Doe"
     private let affinityGroupName = UILabel()
     private let defaultAffinityGroupName = "-"
+    private let judgedCountBtn = UIButton()
     private let judgedCount = UILabel()
     private let defaultJudgedCount = "-"
     private let teamSearchBar = UISearchBar()
     private let teamListTblVw = UITableView()
     private var teams = [TeamData]()
     private var filteredTeams = [TeamData]()
+    private  let titleLbl = UILabel()
     
     func makeHeaderView() {
         //Header
@@ -81,6 +83,10 @@ class TeamListVC: UIViewController {
         affinityGroupName.textColor = .white
         affinityGroupName.font = headerFontRegular
         affinityGroupName.text = defaultAffinityGroupName
+        
+        
+        /*
+        
         //Judged Count
         let judgedCountTitle = UILabel()
         headerView.addSubview(judgedCountTitle)
@@ -107,6 +113,34 @@ class TeamListVC: UIViewController {
         judgedCount.textColor = .white
         judgedCount.font = headerFontRegular
         judgedCount.text = defaultJudgedCount
+        */
+        
+        //Judged Count
+        headerView.addSubview(judgedCountBtn)
+        judgedCountBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            judgedCountBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            judgedCountBtn.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 20),
+            judgedCountBtn.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            judgedCountBtn.heightAnchor.constraint(equalToConstant: 30),
+            judgedCountBtn.widthAnchor.constraint(equalToConstant: 150)
+        ])
+        judgedCountBtn.setTitleColor(.white, for: .normal)
+        judgedCountBtn.titleLabel?.font = headerFontRegular
+        self.judgedCountBtn.setTitle("Scored 0 Teams", for: .normal)
+        judgedCountBtn.layer.cornerRadius = 5
+        judgedCountBtn.layer.borderWidth = 1
+        judgedCountBtn.layer.borderColor = UIColor.white.cgColor
+        judgedCountBtn.addTarget(self, action: #selector(showScoredTeamsList(_:)), for: .touchUpInside)
+        let ref = Database.database().reference()
+        ref.child(judgesKey).child(getUserPhoneNumber()).child(judgedTeamsKey).observe(.value) { (snapshot) in
+            if let teamIds = snapshot.value as? [Int] {
+                self.judgedCountBtn.setTitle("Scored \(teamIds.count) Teams", for: .normal)
+            } else {
+                self.judgedCountBtn.setTitle("Scored 0 Teams", for: .normal)
+            }
+        }
+        
         //Log Out
         let logOutBtn = UIButton()
         view.addSubview(logOutBtn)
@@ -118,6 +152,7 @@ class TeamListVC: UIViewController {
         logOutBtn.layer.borderWidth = 1
         NSLayoutConstraint.activate([
             logOutBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            logOutBtn.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 20),
             logOutBtn.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
             logOutBtn.widthAnchor.constraint(equalToConstant: 80),
             logOutBtn.heightAnchor.constraint(equalToConstant: 30)
@@ -125,9 +160,31 @@ class TeamListVC: UIViewController {
         logOutBtn.addTarget(self, action: #selector(logOutUser(_:)), for: .touchUpInside)
     }
     
+    func makeSearchTeamsCell() -> UITableViewCell {
+        let searchCell = UITableViewCell()
+        searchCell.selectionStyle = .none
+        let searchBtn = UIButton()
+        searchCell.contentView.addSubview(searchBtn)
+        searchBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchBtn.topAnchor.constraint(equalTo: searchCell.contentView.topAnchor, constant: 10),
+            searchBtn.heightAnchor.constraint(equalToConstant: 40),
+            searchBtn.bottomAnchor.constraint(equalTo: searchCell.contentView.bottomAnchor, constant: -10),
+            searchBtn.leadingAnchor.constraint(equalTo: searchCell.contentView.leadingAnchor, constant: 10),
+            searchBtn.trailingAnchor.constraint(equalTo: searchCell.contentView.trailingAnchor, constant: -10),
+        ])
+        searchBtn.setTitle("Search Team", for: .normal)
+        searchBtn.layer.cornerRadius = 5
+        searchBtn.layer.borderWidth = 1
+        searchBtn.layer.borderColor = UIColor.black.cgColor
+        searchBtn.setTitleColor(.black, for: .normal)
+        searchBtn.titleLabel?.font = UIFont(name: robotoRegular, size: 17)
+        searchBtn.addTarget(self, action: #selector(showAllTeamsList(_:)), for: .touchUpInside)
+        return searchCell
+    }
+    
     func setHeaderGroupLabels() {
-        let user = Auth.auth().currentUser
-        let phoneNumber = String((String(user?.phoneNumber ?? "").removingPercentEncoding ?? "").suffix(10))
+        let phoneNumber = getUserPhoneNumber()
         let ref = Database.database().reference().child(judgesKey).child(phoneNumber)
         ref.child(judgeNameKey).observeSingleEvent(of: .value) { (snapshot) in
             self.judgeNameLbl.text = snapshot.value as? String ?? "-"
@@ -140,16 +197,19 @@ class TeamListVC: UIViewController {
         }
     }
     
-    func addSearchBar() {
-        view.addSubview(teamSearchBar)
-        teamSearchBar.translatesAutoresizingMaskIntoConstraints = false
+    func addVCTitle() {
+        view.addSubview(titleLbl)
+        titleLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            teamSearchBar.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            teamSearchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            teamSearchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            titleLbl.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            titleLbl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            titleLbl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            titleLbl.heightAnchor.constraint(equalToConstant: 40)
         ])
-        teamSearchBar.placeholder = "Filter teams..."
-        teamSearchBar.delegate = self
+        titleLbl.text = "Please score any one team..."
+        titleLbl.font = UIFont(name: robotoRegular, size: 18)
+        titleLbl.textColor = .black
+        titleLbl.textAlignment = .center
     }
     
     func addTeamListTblVw() {
@@ -157,15 +217,16 @@ class TeamListVC: UIViewController {
         teamListTblVw.delegate = self
         teamListTblVw.dataSource = self
         teamListTblVw.translatesAutoresizingMaskIntoConstraints = false
-        teamListTblVw.estimatedRowHeight = 100
+        teamListTblVw.estimatedRowHeight = 300
         teamListTblVw.rowHeight = UITableView.automaticDimension
-        
+        teamListTblVw.separatorStyle = UITableViewCell.SeparatorStyle.none
         NSLayoutConstraint.activate([
-            teamListTblVw.topAnchor.constraint(equalTo: teamSearchBar.bottomAnchor),
+            teamListTblVw.topAnchor.constraint(equalTo: titleLbl.bottomAnchor),
             teamListTblVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             teamListTblVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             teamListTblVw.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        teamListTblVw.backgroundColor = .white
     }
     
     func setUpView() {
@@ -177,7 +238,7 @@ class TeamListVC: UIViewController {
         setUpView()
         makeHeaderView()
         setHeaderGroupLabels()
-        addSearchBar()
+        addVCTitle()
         addTeamListTblVw()
         fetchTeamData()
     }
@@ -196,6 +257,16 @@ class TeamListVC: UIViewController {
             let signOutErrorAlrt = makeAlert(title: "Sign Out Error", message: signOutError.localizedDescription)
             present(signOutErrorAlrt, animated: true, completion: nil)
         }
+    }
+    
+    @objc func showAllTeamsList(_ sender: UIButton) {
+        let allTeamsListVC = FilterTeamsVC(filterVCType: .AllTeams)
+        present(allTeamsListVC, animated: true)
+    }
+    
+    @objc func showScoredTeamsList(_ sender: UIButton) {
+        let judgedTeamsListVC = FilterTeamsVC(filterVCType: .JudgedTeams)
+        present(judgedTeamsListVC, animated: true)
     }
 }
 
@@ -226,19 +297,26 @@ extension TeamListVC: UISearchBarDelegate {
 extension TeamListVC: UITableViewDataSource {
     
     func fetchTeamData() {
-        let ref = Database.database().reference().child(teamsKey)
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            do {
-         
-                let value = snapshot.value
-                let data = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
-                let decodedTeams =  try JSONDecoder().decode([Int: TeamData].self, from: data)
-                print(data)
-                self.teams = decodedTeams.map{ $0.1 }
-                self.filteredTeams = self.teams
-                self.teamListTblVw.reloadData()
-            } catch {
-                print(error)
+        let ref = Database.database().reference()
+    
+        ref.child(judgingQueueKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
+            guard let value = snapshot.value else { return }
+            let teamIds = value as? [Int]
+            if let teamIds = teamIds {
+                for teamId in teamIds {
+                    ref.child(teamsKey).child(String(teamId)).observeSingleEvent(of: .value) { (snapshot) in
+                        do {
+                            let value = snapshot.value
+                            let data = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+                            let decodedTeam =  try JSONDecoder().decode(TeamData.self, from: data)
+                            self.teams.append(decodedTeam)
+                            self.filteredTeams.append(decodedTeam)
+                            self.teamListTblVw.reloadData()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
             }
         }
     }
@@ -248,13 +326,14 @@ extension TeamListVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredTeams.count
+        return filteredTeams.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = UITableViewCell()
-//        cell.textLabel?.text = filteredTeams[indexPath.row].teamName
-//        return cell
+        if indexPath.row == filteredTeams.count {
+            return makeSearchTeamsCell()
+        }
+        
         let cell = TeamInfoCell()
         cell.configureCell(teamInfo: filteredTeams[indexPath.row])
         return cell
