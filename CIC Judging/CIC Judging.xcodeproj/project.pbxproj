@@ -10,6 +10,7 @@
 		2F08F707481E565D499AB7BE /* Pods_CIC_Judging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */; };
 		B2278109240C50C500890DC3 /* DBKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2278108240C50C500890DC3 /* DBKeys.swift */; };
 		B227810B240C606000890DC3 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810A240C606000890DC3 /* Decodables.swift */; };
+		B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810D240C815E00890DC3 /* TeamInfoCell.swift */; };
 		B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32C240873E10065C20E /* AppDelegate.swift */; };
 		B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32E240873E10065C20E /* SceneDelegate.swift */; };
 		B2EEB331240873E10065C20E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB330240873E10065C20E /* LoginVC.swift */; };
@@ -44,6 +45,7 @@
 		A8F0BE9B39605669F6AB6FDE /* Pods_CIC_Judging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIC_Judging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2278108240C50C500890DC3 /* DBKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBKeys.swift; sourceTree = "<group>"; };
 		B227810A240C606000890DC3 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
+		B227810D240C815E00890DC3 /* TeamInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoCell.swift; sourceTree = "<group>"; };
 		B2EEB329240873E10065C20E /* CIC Judging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIC Judging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2EEB32C240873E10065C20E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2EEB32E240873E10065C20E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B227810C240C812D00890DC3 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B227810D240C815E00890DC3 /* TeamInfoCell.swift */,
+			);
+			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		B2EEB320240873E10065C20E = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				B2EEB34524087ECF0065C20E /* CIC Judging.entitlements */,
+				B227810C240C812D00890DC3 /* Custom Cells */,
 				B2EEB364240A1C410065C20E /* Utils */,
 				B2EEB367240A25DF0065C20E /* Views */,
 				B2EEB341240878030065C20E /* Delegates */,
@@ -363,6 +374,7 @@
 				B2EEB34824097FEF0065C20E /* Colors.swift in Sources */,
 				B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */,
 				B2278109240C50C500890DC3 /* DBKeys.swift in Sources */,
+				B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */,
 				B227810B240C606000890DC3 /* Decodables.swift in Sources */,
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,

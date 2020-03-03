@@ -8,17 +8,17 @@
 
 import Foundation
 
-struct TeamMember: Codable {
-    var name: String
-    var resume: String
-}
-
 struct TeamData: Codable {
     var affinityGroup: String
     var descp: String
-    var team: [TeamMember]
+    var logoUrl: String
+    var posterUrl: String
+    var projectUrl: String
+    var resumeUrl: String
+    var team: [String]
     var teamId: Int
     var teamName: String
     var timestamp: String
+    var videoUrl: String
 }
 

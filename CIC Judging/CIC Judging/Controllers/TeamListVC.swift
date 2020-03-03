@@ -19,9 +19,6 @@ class TeamListVC: UIViewController {
     private let defaultAffinityGroupName = "-"
     private let judgedCount = UILabel()
     private let defaultJudgedCount = "-"
-    private let headerFontBoldBig =  UIFont(name: robotoBold, size: 20)
-    private let headerFontRegular = UIFont(name: robotoRegular, size: 18)
-    private let headerFontBold = UIFont(name: robotoBold, size: 18)
     private let teamSearchBar = UISearchBar()
     private let teamListTblVw = UITableView()
     private var teams = [TeamData]()
@@ -160,6 +157,9 @@ class TeamListVC: UIViewController {
         teamListTblVw.delegate = self
         teamListTblVw.dataSource = self
         teamListTblVw.translatesAutoresizingMaskIntoConstraints = false
+        teamListTblVw.estimatedRowHeight = 100
+        teamListTblVw.rowHeight = UITableView.automaticDimension
+        
         NSLayoutConstraint.activate([
             teamListTblVw.topAnchor.constraint(equalTo: teamSearchBar.bottomAnchor),
             teamListTblVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -217,7 +217,6 @@ extension TeamListVC {
 //MARK:- Team Search Bar
 extension TeamListVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
         filteredTeams = filterTeams(searchText: searchText)
         teamListTblVw.reloadData()
     }
@@ -234,6 +233,7 @@ extension TeamListVC: UITableViewDataSource {
                 let value = snapshot.value
                 let data = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                 let decodedTeams =  try JSONDecoder().decode([Int: TeamData].self, from: data)
+                print(data)
                 self.teams = decodedTeams.map{ $0.1 }
                 self.filteredTeams = self.teams
                 self.teamListTblVw.reloadData()
@@ -252,9 +252,17 @@ extension TeamListVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = filteredTeams[indexPath.row].teamName
+//        let cell = UITableViewCell()
+//        cell.textLabel?.text = filteredTeams[indexPath.row].teamName
+//        return cell
+        let cell = TeamInfoCell()
+        cell.configureCell(teamInfo: filteredTeams[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 200
+        return UITableView.automaticDimension
     }
 }
 
