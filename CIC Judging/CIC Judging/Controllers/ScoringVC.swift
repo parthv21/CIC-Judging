@@ -40,108 +40,20 @@ class ScoringVC: UIViewController {
     
     
     func addHeaderView() {
-        //Container
         view.addSubview(headerVw)
-        headerVw.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            headerVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-        headerVw.backgroundColor = techGold
-        //Horizontal Stack View
-        let infoStkVw = UIStackView()
-        headerVw.addSubview(infoStkVw)
-        infoStkVw.translatesAutoresizingMaskIntoConstraints = false
-        infoStkVw.axis = .horizontal
-        infoStkVw.spacing = 10
-        infoStkVw.distribution = .fillProportionally
-        NSLayoutConstraint.activate([
-            infoStkVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            infoStkVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            infoStkVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            infoStkVw.heightAnchor.constraint(equalToConstant: 80)
-        ])
-        //Team Logo
-        let teamLogoImgVw = UIImageView()
-        infoStkVw.addArrangedSubview(teamLogoImgVw)
-        teamLogoImgVw.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            teamLogoImgVw.widthAnchor.constraint(equalToConstant: 80),
-            teamLogoImgVw.centerYAnchor.constraint(equalTo: infoStkVw.centerYAnchor)
-        ])
-        teamLogoImgVw.contentMode = .scaleAspectFit
-        downloadAndSetImage(for: teamLogoImgVw, from: teamInfo.logoUrl)
-        //Project Name
-        let projectNameLbl = UILabel()
-        infoStkVw.addArrangedSubview(projectNameLbl)
-        projectNameLbl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-//            projectNameLbl.heightAnchor.constraint(equalToConstant: 50),
-            projectNameLbl.centerYAnchor.constraint(equalTo: infoStkVw.centerYAnchor)
-        ])
-        projectNameLbl.text = teamInfo.teamName
-        projectNameLbl.font = headerFontBoldBig
-        projectNameLbl.textColor = .white
-        //Score
-        let totalScoreTitleLbl = UILabel()
-        headerVw.addSubview(totalScoreTitleLbl)
-        totalScoreTitleLbl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            totalScoreTitleLbl.topAnchor.constraint(equalTo: infoStkVw.bottomAnchor, constant: 10),
-            totalScoreTitleLbl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            totalScoreTitleLbl.heightAnchor.constraint(equalToConstant: 30),
-            totalScoreTitleLbl.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10)
-        ])
-        totalScoreTitleLbl.text = "Score"
-        totalScoreTitleLbl.font = headerFontBold
-        totalScoreTitleLbl.textColor = .white
-        //Total Score
-        headerVw.addSubview(totalScoreLbl)
-        totalScoreLbl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            totalScoreLbl.topAnchor.constraint(equalTo: infoStkVw.bottomAnchor, constant: 10),
-            totalScoreLbl.leadingAnchor.constraint(equalTo: totalScoreTitleLbl.trailingAnchor, constant: 10),
-            totalScoreLbl.heightAnchor.constraint(equalToConstant: 30),
-            totalScoreLbl.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10)
-        ])
-        totalScoreLbl.text = String(defaultTotalScore)
-        totalScoreLbl.font = headerFontRegular
-        totalScoreLbl.textColor = .white
-        //Dismiss Button
         let dismissBtn = UIButton()
-        headerVw.addSubview(dismissBtn)
-        dismissBtn.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            dismissBtn.topAnchor.constraint(equalTo: infoStkVw.bottomAnchor, constant: 10),
-            dismissBtn.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
-            dismissBtn.trailingAnchor.constraint(equalTo: headerVw.trailingAnchor, constant: -10),
-            dismissBtn.widthAnchor.constraint(equalToConstant: 30),
-            dismissBtn.heightAnchor.constraint(equalToConstant: 30),
-        ])
-        dismissBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
-        dismissBtn.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
-        dismissBtn.setTitleColor(.black, for: .normal)
-        dismissBtn.addTarget(self, action: #selector(dismissVC(_:)), for: .touchUpInside)
-        //Details Button
         let detailsBtn = UIButton()
-        headerVw.addSubview(detailsBtn)
-        detailsBtn.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            detailsBtn.topAnchor.constraint(equalTo: infoStkVw.bottomAnchor, constant: 10),
-            detailsBtn.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
-            detailsBtn.trailingAnchor.constraint(equalTo: dismissBtn.leadingAnchor, constant: -10),
-            detailsBtn.heightAnchor.constraint(equalToConstant: 30),
-            detailsBtn.widthAnchor.constraint(equalToConstant: 80)
-        ])
-        detailsBtn.setTitle("Details", for: .normal)
-        detailsBtn.setTitleColor(.black, for: .normal)
-        detailsBtn.titleLabel?.font = headerFontRegular
-        detailsBtn.layer.cornerRadius = 5
-        detailsBtn.layer.borderWidth = 1
-        detailsBtn.layer.borderColor = UIColor.black.cgColor
-        detailsBtn.layer.masksToBounds = true
+                   headerVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                   headerVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                   headerVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+               ])
+        makeInfoHeaderView(view: view, headerVw: headerVw, teamInfo: teamInfo, totalScoreLbl: totalScoreLbl, detailsBtn: detailsBtn, dismissBtn: dismissBtn)
         
+        totalScoreLbl.text = String(defaultTotalScore)
+        dismissBtn.addTarget(self, action: #selector(dismissVC(_:)), for: .touchUpInside)
+        detailsBtn.addTarget(self, action: #selector(presentTeamDetails(_:)), for: .touchUpInside)
+        headerVw.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func addScoringTblVw() {
@@ -202,11 +114,18 @@ class ScoringVC: UIViewController {
         let scoreCriterion = Array(notification.userInfo!.keys).first as! String
         if let newScore = notification.userInfo![scoreCriterion] as? Int {
             scores[scoreCriterion] = newScore
-            let newTotalScore = (scores[ScoringCriterion.Innovation.rawValue] as! Int) + (scores[ScoringCriterion.Usability.rawValue] as! Int) + (scores[ScoringCriterion.Presentation.rawValue] as! Int) + (scores[ScoringCriterion.Viability.rawValue] as! Int)
+            let newTotalScore = calculateTotalScore()
             totalScoreLbl.text = "\(newTotalScore)"
         } else if let newNote =  notification.userInfo![scoreCriterion] as? String {
             scores[scoreCriterion] = newNote
         }
+    }
+    
+    func calculateTotalScore() -> Int {
+        return (scores[ScoringCriterion.Innovation.rawValue] as! Int)
+             + (scores[ScoringCriterion.Usability.rawValue] as! Int)
+             + (scores[ScoringCriterion.Presentation.rawValue] as! Int)
+             + (scores[ScoringCriterion.Viability.rawValue] as! Int)
     }
     
     func _dismissVC() {
@@ -223,6 +142,11 @@ class ScoringVC: UIViewController {
         _dismissVC()
     }
     
+    @objc func presentTeamDetails(_ sender: UIButton) {
+        let teamDetailsVC = TeamDetailsVC(teamInfo: teamInfo, totalScore: Int(totalScoreLbl.text ?? "0") ?? 0)
+        present(teamDetailsVC, animated: true, completion: nil)
+    }
+    
     @objc func submitScores(_ sender: UIButton) {
         let ref = Database.database().reference()
         ref.child(teamsKey).child(String(teamInfo.teamId)).child(scoresKey).child(getUserPhoneNumber()).setValue(scores)
@@ -233,6 +157,7 @@ class ScoringVC: UIViewController {
         let ref = Database.database().reference()
         let scoresRef = ref.child(teamsKey).child(String(teamInfo.teamId)).child(scoresKey).child(getUserPhoneNumber())
         scoresRef.observe(.value) { (snapshot) in
+            if !snapshot.exists() { return }
             do {
                 if let value = snapshot.value {
                     let data = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
@@ -242,6 +167,8 @@ class ScoringVC: UIViewController {
                     self.scores[ScoringCriterion.Presentation.rawValue] = decodedScores.presentation
                     self.scores[ScoringCriterion.Viability.rawValue] = decodedScores.viability
                     self.scores[ScoringCriterion.Notes.rawValue] = decodedScores.notes
+                    self.defaultTotalScore = self.calculateTotalScore()
+                    self.totalScoreLbl.text = "\(self.defaultTotalScore)"
                     self.scoringTblVw.reloadData()
                 }
             } catch {

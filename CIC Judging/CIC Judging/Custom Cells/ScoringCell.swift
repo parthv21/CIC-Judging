@@ -67,7 +67,7 @@ class ScoringCell: UITableViewCell {
         ])
         scoringBtnStkVw.axis = .horizontal
         scoringBtnStkVw.distribution = .fillEqually
-        scoringBtnStkVw.distribution = .fillEqually
+        scoringBtnStkVw.spacing = 10
         
         //Scoring Buttons
         let scoreOneBtn = makeScoreButton(title: 1, fontSize: 12, height: 40)
@@ -90,9 +90,9 @@ class ScoringCell: UITableViewCell {
         scoreBtn.titleLabel?.font = UIFont(name: robotoRegular, size: CGFloat(fontSize))
         scoreBtn.tag = title
         scoreBtn.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            scoreBtn.widthAnchor.constraint(equalToConstant: CGFloat(height))
-        ])
+//        NSLayoutConstraint.activate([
+//            scoreBtn.widthAnchor.constraint(equalToConstant: CGFloat(height))
+//        ])
         scoreBtn.layer.cornerRadius = CGFloat(height/2)
         scoreBtn.addTarget(self, action: #selector(broadcastScore(_:)), for: .touchUpInside)
         return scoreBtn
