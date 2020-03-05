@@ -9,16 +9,23 @@
 import Foundation
 
 struct TeamData: Codable {
-    var affinityGroup: String
-    var descp: String
-    var logoUrl: String
-    var posterUrl: String
-    var projectUrl: String
-    var resumeUrl: String
-    var team: [String]
-    var teamId: Int
-    var teamName: String
-    var timestamp: String
-    var videoUrl: String
+    let affinityGroup: String
+    let descp: String
+    let logoUrl: String
+    let posterUrl: String
+    let projectUrl: String
+    let resumeUrl: String
+    let team: [String]
+    let teamId: Int
+    let teamName: String
+    let timestamp: String
+    let videoUrl: String
 }
 
+struct ScoresData: Codable {
+    let innovation: Int
+    let presentation: Int
+    let usability: Int
+    let viability: Int
+    let notes: String
+}

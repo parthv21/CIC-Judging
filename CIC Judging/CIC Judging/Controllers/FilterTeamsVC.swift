@@ -195,6 +195,14 @@ extension FilterTeamsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredTeams.count
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let currentVCType: VCType = filterVCType == .AllTeams ? .FilterAllTeamsVC : .FilterJudgedTeamsVC
+        let teamInfo = filteredTeams[indexPath.row]
+        let scoringVC = ScoringVC(previousVCType: currentVCType, teamId: teamInfo.teamId, teamInfo: teamInfo)
+        present(scoringVC, animated: true, completion: nil)
+    }
 }
 
 extension FilterTeamsVC: UITableViewDelegate {

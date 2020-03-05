@@ -16,6 +16,10 @@
 		B2278109240C50C500890DC3 /* DBKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2278108240C50C500890DC3 /* DBKeys.swift */; };
 		B227810B240C606000890DC3 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810A240C606000890DC3 /* Decodables.swift */; };
 		B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810D240C815E00890DC3 /* TeamInfoCell.swift */; };
+		B2EDF60F240FF0F40081578A /* ScoringVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF60E240FF0F40081578A /* ScoringVC.swift */; };
+		B2EDF611241002290081578A /* ScoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF610241002290081578A /* ScoringCell.swift */; };
+		B2EDF61324100AE40081578A /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF61224100AE40081578A /* NotificationKeys.swift */; };
+		B2EDF615241017190081578A /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF614241017190081578A /* NotesCell.swift */; };
 		B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32C240873E10065C20E /* AppDelegate.swift */; };
 		B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB32E240873E10065C20E /* SceneDelegate.swift */; };
 		B2EEB331240873E10065C20E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB330240873E10065C20E /* LoginVC.swift */; };
@@ -56,6 +60,10 @@
 		B2278108240C50C500890DC3 /* DBKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBKeys.swift; sourceTree = "<group>"; };
 		B227810A240C606000890DC3 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		B227810D240C815E00890DC3 /* TeamInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoCell.swift; sourceTree = "<group>"; };
+		B2EDF60E240FF0F40081578A /* ScoringVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringVC.swift; sourceTree = "<group>"; };
+		B2EDF610241002290081578A /* ScoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringCell.swift; sourceTree = "<group>"; };
+		B2EDF61224100AE40081578A /* NotificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKeys.swift; sourceTree = "<group>"; };
+		B2EDF614241017190081578A /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
 		B2EEB329240873E10065C20E /* CIC Judging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIC Judging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2EEB32C240873E10065C20E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2EEB32E240873E10065C20E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				B227810D240C815E00890DC3 /* TeamInfoCell.swift */,
+				B2EDF610241002290081578A /* ScoringCell.swift */,
+				B2EDF614241017190081578A /* NotesCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -167,6 +177,7 @@
 				B2EEB330240873E10065C20E /* LoginVC.swift */,
 				B2EEB36C240A2FBB0065C20E /* TeamListVC.swift */,
 				B2191AA1240EC418005E57CD /* FilterTeamsVC.swift */,
+				B2EDF60E240FF0F40081578A /* ScoringVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -189,6 +200,7 @@
 				B2278108240C50C500890DC3 /* DBKeys.swift */,
 				B227810A240C606000890DC3 /* Decodables.swift */,
 				B2191AA3240EC53A005E57CD /* Enums.swift */,
+				B2EDF61224100AE40081578A /* NotificationKeys.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -394,15 +406,19 @@
 				B2EEB36F240A36460065C20E /* Types.swift in Sources */,
 				B2191AA7240EF6D5005E57CD /* LogoImages.swift in Sources */,
 				B2EEB34A24098A880065C20E /* Fonts.swift in Sources */,
+				B2EDF615241017190081578A /* NotesCell.swift in Sources */,
 				B2191AA4240EC53A005E57CD /* Enums.swift in Sources */,
 				B2EEB371240A3ED50065C20E /* UserDefaultKeys.swift in Sources */,
 				B2EEB366240A1C650065C20E /* Validators.swift in Sources */,
+				B2EDF61324100AE40081578A /* NotificationKeys.swift in Sources */,
 				B2191AA2240EC418005E57CD /* FilterTeamsVC.swift in Sources */,
 				B2EEB34824097FEF0065C20E /* Colors.swift in Sources */,
 				B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */,
+				B2EDF611241002290081578A /* ScoringCell.swift in Sources */,
 				B2278109240C50C500890DC3 /* DBKeys.swift in Sources */,
 				B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */,
 				B227810B240C606000890DC3 /* Decodables.swift in Sources */,
+				B2EDF60F240FF0F40081578A /* ScoringVC.swift in Sources */,
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,
 				B2191AA0240EAE11005E57CD /* KeyMaker.swift in Sources */,

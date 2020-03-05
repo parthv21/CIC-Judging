@@ -84,9 +84,6 @@ class TeamInfoCell: UITableViewCell {
         teamIdInfoStckVw.addArrangedSubview(teamNameLbl)
         teamNameLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-//            teamNameLbl.leadingAnchor.constraint(equalTo: teamIdInfoStackView.leadingAnchor),
-//            teamNameLbl.trailingAnchor.constraint(equalTo: teamIdInfoStackView.trailingAnchor),
-//            teamNameLbl.topAnchor.constraint(equalTo: teamIdInfoStckVw.topAnchor, constant: 0),
             teamNameLbl.heightAnchor.constraint(equalToConstant: 40)
         ])
         teamNameLbl.text = defaultTeamName
@@ -97,8 +94,6 @@ class TeamInfoCell: UITableViewCell {
         teamIdInfoStckVw.addArrangedSubview(teamIdLbl)
         teamIdLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-//            teamIdLbl.leadingAnchor.constraint(equalTo: teamIdInfoStackView.leadingAnchor),
-//            teamIdLbl.trailingAnchor.constraint(equalTo: teamIdInfoStackView.trailingAnchor),
             teamIdLbl.topAnchor.constraint(equalTo: teamNameLbl.bottomAnchor, constant: 0),
             teamIdLbl.heightAnchor.constraint(equalToConstant: 20),
             teamIdLbl.bottomAnchor.constraint(equalTo: teamIdInfoStckVw.bottomAnchor, constant: 0)
@@ -109,24 +104,14 @@ class TeamInfoCell: UITableViewCell {
 //        teamIdLbl.isHidden = true
     }
     
+    
+   required init?(coder aDecoder: NSCoder) {
+       fatalError("init(coder:) has not been implemented")
+   }
+    
     func configureCell(teamInfo: TeamData) {
         teamNameLbl.text = teamInfo.teamName
         teamIdLbl.text = "Team ID: \(teamInfo.teamId)"
-        if teamLogoImages.index(forKey: teamInfo.logoUrl) != nil {
-            teamLogoImgVw.image = teamLogoImages[teamInfo.logoUrl]
-        } else {
-            fetchImage(url: teamInfo.logoUrl) { (logo) in
-                teamLogoImages[teamInfo.logoUrl] = logo
-                DispatchQueue.main.async {
-                    self.teamLogoImgVw.image = logo
-                }
-            }
-        }
+        downloadAndSetImage(for: teamLogoImgVw, from: teamInfo.logoUrl)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-        
-    }
-    
 }

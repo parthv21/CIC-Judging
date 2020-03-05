@@ -13,3 +13,19 @@ enum FilterVCType: String {
     case AllTeams = "All Teams"
 }
 
+enum VCType {
+    case LoginVC
+    case TeamListVC
+    case FilterAllTeamsVC
+    case FilterJudgedTeamsVC
+    case None
+}
+
+enum ScoringCriterion: String {
+    case Usability = "usability"
+    case Innovation = "innovation"
+    case Viability = "viability"
+    case Presentation = "presentation"
+    case Notes = "notes"
+}
+

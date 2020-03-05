@@ -340,8 +340,14 @@ extension TeamListVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 200
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let teamInfo = filteredTeams[indexPath.row]
+        let scoringVC = ScoringVC(previousVCType: .TeamListVC, teamId: teamInfo.teamId, teamInfo: teamInfo)
+        present(scoringVC, animated: true, completion: nil)
     }
 }
 

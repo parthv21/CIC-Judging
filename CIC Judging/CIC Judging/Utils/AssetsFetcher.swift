@@ -25,3 +25,16 @@ func fetchImage(url: String, completion: @escaping (UIImage) -> ()) {
         }
     }
 }
+
+func downloadAndSetImage(for imgVw: UIImageView, from imageUrl: String) {
+    if teamLogoImages.index(forKey: imageUrl) != nil {
+        imgVw.image = teamLogoImages[imageUrl]
+    } else {
+        fetchImage(url: imageUrl) { (logo) in
+            teamLogoImages[imageUrl] = logo
+            DispatchQueue.main.async {
+                imgVw.image = logo
+            }
+        }
+    }
+}
