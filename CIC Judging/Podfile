@@ -8,6 +8,7 @@ target 'CIC Judging' do
   # Pods for CIC Judging
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'Firebase/Functions'
   pod 'FontAwesome.swift'
 
 end

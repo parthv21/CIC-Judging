@@ -25,6 +25,7 @@ class TeamListVC: UIViewController {
     private var teams = [TeamData]()
     private var filteredTeams = [TeamData]()
     private  let titleLbl = UILabel()
+    private lazy var functions = Functions.functions()
     
     func makeHeaderView() {
         //Header
@@ -86,34 +87,34 @@ class TeamListVC: UIViewController {
         
         
         /*
-        
-        //Judged Count
-        let judgedCountTitle = UILabel()
-        headerView.addSubview(judgedCountTitle)
-        judgedCountTitle.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            judgedCountTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            judgedCountTitle.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
-            judgedCountTitle.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
-            judgedCountTitle.heightAnchor.constraint(equalToConstant: 20),
-            judgedCountTitle.widthAnchor.constraint(equalToConstant: 80)
-        ])
-        judgedCountTitle.textColor = .white
-        judgedCountTitle.text = "Judged:"
-        judgedCountTitle.font = headerFontBold
-        headerView.addSubview(judgedCount)
-        judgedCount.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            judgedCount.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
-            judgedCount.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
-            judgedCount.leadingAnchor.constraint(equalTo: judgedCountTitle.trailingAnchor),
-            judgedCount.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            judgedCount.heightAnchor.constraint(equalToConstant: 20),
-        ])
-        judgedCount.textColor = .white
-        judgedCount.font = headerFontRegular
-        judgedCount.text = defaultJudgedCount
-        */
+         
+         //Judged Count
+         let judgedCountTitle = UILabel()
+         headerView.addSubview(judgedCountTitle)
+         judgedCountTitle.translatesAutoresizingMaskIntoConstraints = false
+         NSLayoutConstraint.activate([
+         judgedCountTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+         judgedCountTitle.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
+         judgedCountTitle.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
+         judgedCountTitle.heightAnchor.constraint(equalToConstant: 20),
+         judgedCountTitle.widthAnchor.constraint(equalToConstant: 80)
+         ])
+         judgedCountTitle.textColor = .white
+         judgedCountTitle.text = "Judged:"
+         judgedCountTitle.font = headerFontBold
+         headerView.addSubview(judgedCount)
+         judgedCount.translatesAutoresizingMaskIntoConstraints = false
+         NSLayoutConstraint.activate([
+         judgedCount.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
+         judgedCount.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
+         judgedCount.leadingAnchor.constraint(equalTo: judgedCountTitle.trailingAnchor),
+         judgedCount.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+         judgedCount.heightAnchor.constraint(equalToConstant: 20),
+         ])
+         judgedCount.textColor = .white
+         judgedCount.font = headerFontRegular
+         judgedCount.text = defaultJudgedCount
+         */
         
         //Judged Count
         headerView.addSubview(judgedCountBtn)
@@ -245,14 +246,14 @@ class TeamListVC: UIViewController {
     
     @objc func logOutUser(_ sender: UIButton) {
         do {
-          try Auth.auth().signOut()
+            try Auth.auth().signOut()
             let loginVc = LoginVC()
             loginVc.modalPresentationStyle = .fullScreen
             present(loginVc, animated: true, completion: nil)
             let prefs = UserDefaults.standard
             prefs.removeObject(forKey: authVerificationID)
             prefs.removeObject(forKey: hasRunBefore)
-
+            
         } catch let signOutError as NSError {
             let signOutErrorAlrt = makeAlert(title: "Sign Out Error", message: signOutError.localizedDescription)
             present(signOutErrorAlrt, animated: true, completion: nil)
@@ -298,7 +299,19 @@ extension TeamListVC: UITableViewDataSource {
     
     func fetchTeamData() {
         let ref = Database.database().reference()
-    
+        
+        functions.httpsCallable("assignTeams").call(["judgeId": getUserPhoneNumber()]) { (result, error) in
+            if let error = error as NSError? {
+                if error.domain == FunctionsErrorDomain {
+                    let code = FunctionsErrorCode(rawValue: error.code)
+                    let message = error.localizedDescription
+                    let details = error.userInfo[FunctionsErrorDetailsKey]
+                    print("Error: \(details)")
+                }
+            }
+        }
+        
+        
         ref.child(judgingQueueKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
             guard let value = snapshot.value else { return }
             let teamIds = value as? [Int]
