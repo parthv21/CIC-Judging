@@ -31,8 +31,8 @@ func downloadAndSetImage(for imgVw: UIImageView, from imageUrl: String) {
         imgVw.image = teamLogoImages[imageUrl]
     } else {
         fetchImage(url: imageUrl) { (logo) in
-            teamLogoImages[imageUrl] = logo
             DispatchQueue.main.async {
+                teamLogoImages[imageUrl] = logo
                 imgVw.image = logo
             }
         }

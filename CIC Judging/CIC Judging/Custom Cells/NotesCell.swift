@@ -80,5 +80,13 @@ extension NotesCell: UITextViewDelegate {
         let notificationName = NSNotification.Name(rawValue: scoreUpdateNotificationKey)
         NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [ScoringCriterion.Notes.rawValue: textView.text ?? ""])
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }
 

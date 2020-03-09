@@ -279,7 +279,6 @@ extension TeamListVC: UITableViewDataSource {
             }
         }
         
-        
         ref.child(judgingQueueKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
             print("[TEAMS] Found new teams to score")
             self.teams.removeAll()

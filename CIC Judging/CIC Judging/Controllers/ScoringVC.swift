@@ -23,6 +23,7 @@ class ScoringVC: UIViewController {
     private let scoringTblVw = UITableView()
     private var oldTblVwOffset = CGPoint(x: 0, y: 0)
     private lazy var functions = Functions.functions()
+    private var isKeyboardVisible = false
     
     private let scoringCriterionList = [ScoringCriterion.Usability, ScoringCriterion.Innovation,  ScoringCriterion.Viability, ScoringCriterion.Presentation]
     private var scores: [String: Any] = [ScoringCriterion.Usability.rawValue: 1, ScoringCriterion.Innovation.rawValue: 1, ScoringCriterion.Viability.rawValue: 1, ScoringCriterion.Presentation.rawValue: 1, ScoringCriterion.Notes.rawValue: ""]
@@ -202,7 +203,7 @@ class ScoringVC: UIViewController {
 }
 
 
-//MARK:- Scoring cell table view methods
+//MARK:- Scoring cell table view configuration
 
 extension ScoringVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -237,6 +238,17 @@ extension ScoringVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if isKeyboardVisible {
+            isKeyboardVisible = false
+            view.endEditing(true)
+        }
+    }
+    
+//    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//        isKeyboardVisible = true
+//    }
 }
 
 //MARK:- Handling text fields hidden by keyboard
@@ -249,12 +261,18 @@ extension ScoringVC {
     @objc func onKeyboardAppear(_ notification: NSNotification) {
         oldTblVwOffset = scoringTblVw.contentOffset
         DispatchQueue.main.async {
-            let scrollPoint = CGPoint(x: 0, y: 450)
-            self.scoringTblVw.setContentOffset(scrollPoint, animated: true)
+            UIView.animate(withDuration: 0.5, animations: {
+                let scrollPoint = CGPoint(x: 0, y: 450)
+                self.scoringTblVw.contentOffset = scrollPoint
+            }) { (finished) in
+                if finished {
+                    self.isKeyboardVisible = true
+                }
+            }
         }
     }
     
     @objc func onKeyboardDisappear(_ notification: NSNotification) {
-        //        scoringTblVw.setContentOffset(oldTblVwOffset, animated: true)
+        scoringTblVw.setContentOffset(oldTblVwOffset, animated: true)
     }
 }

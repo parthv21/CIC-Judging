@@ -26,7 +26,6 @@ class TeamDetailsVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func addHeaderView() {
         view.addSubview(headerVw)
         let dismissBtn = UIButton()
@@ -41,7 +40,6 @@ class TeamDetailsVC: UIViewController {
         dismissBtn.addTarget(self, action: #selector(dismissVC(_:)), for: .touchUpInside)
         headerVw.translatesAutoresizingMaskIntoConstraints = false
     }
-    
     
     func addInfoTxtVw() {
         let infoTxtVw = UITextView()
@@ -64,7 +62,6 @@ class TeamDetailsVC: UIViewController {
         infoTxtVw.attributedText = detailsAtrTxt
     }
     
-    
     func _dismissVC() {
         dismiss(animated: true, completion: nil)
     }
@@ -79,5 +76,4 @@ class TeamDetailsVC: UIViewController {
         addHeaderView()
         addInfoTxtVw()
     }
-    
 }
