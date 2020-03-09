@@ -101,8 +101,8 @@ func makeInfoHeaderView(view: UIView, headerVw: UIView, teamInfo: TeamData, tota
         dismissBtn.topAnchor.constraint(equalTo: infoStkVw.bottomAnchor, constant: 10),
         dismissBtn.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
         dismissBtn.trailingAnchor.constraint(equalTo: headerVw.trailingAnchor, constant: -10),
-        dismissBtn.widthAnchor.constraint(equalToConstant: 30),
-        dismissBtn.heightAnchor.constraint(equalToConstant: 30),
+        dismissBtn.widthAnchor.constraint(equalToConstant: 50),
+        dismissBtn.heightAnchor.constraint(equalToConstant: 50),
     ])
     dismissBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
     dismissBtn.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)

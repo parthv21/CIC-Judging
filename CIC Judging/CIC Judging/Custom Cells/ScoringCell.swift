@@ -19,6 +19,7 @@ class ScoringCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         //Container
         let container = UIView()
         contentView.addSubview(container)

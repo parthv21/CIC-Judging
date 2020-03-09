@@ -22,6 +22,7 @@ class ScoringVC: UIViewController {
     private var defaultTotalScore = 4
     private let scoringTblVw = UITableView()
     private var oldTblVwOffset = CGPoint(x: 0, y: 0)
+    private lazy var functions = Functions.functions()
     
     private let scoringCriterionList = [ScoringCriterion.Usability, ScoringCriterion.Innovation,  ScoringCriterion.Viability, ScoringCriterion.Presentation]
     private var scores: [String: Any] = [ScoringCriterion.Usability.rawValue: 1, ScoringCriterion.Innovation.rawValue: 1, ScoringCriterion.Viability.rawValue: 1, ScoringCriterion.Presentation.rawValue: 1, ScoringCriterion.Notes.rawValue: ""]
@@ -44,10 +45,10 @@ class ScoringVC: UIViewController {
         let dismissBtn = UIButton()
         let detailsBtn = UIButton()
         NSLayoutConstraint.activate([
-                   headerVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                   headerVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                   headerVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-               ])
+            headerVw.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerVw.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            headerVw.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
         makeInfoHeaderView(view: view, headerVw: headerVw, teamInfo: teamInfo, totalScoreLbl: totalScoreLbl, detailsBtn: detailsBtn, dismissBtn: dismissBtn)
         
         totalScoreLbl.text = String(defaultTotalScore)
@@ -102,12 +103,12 @@ class ScoringVC: UIViewController {
         addScoringTblVw()
         registerForKeyboardNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(manageScoreUpdate(_:) ), name: NSNotification.Name(rawValue: scoreUpdateNotificationKey), object: nil)
-
+        
     }
     
     deinit {
-       NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-       NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     @objc func manageScoreUpdate(_ notification: NSNotification) {
@@ -123,9 +124,9 @@ class ScoringVC: UIViewController {
     
     func calculateTotalScore() -> Int {
         return (scores[ScoringCriterion.Innovation.rawValue] as! Int)
-             + (scores[ScoringCriterion.Usability.rawValue] as! Int)
-             + (scores[ScoringCriterion.Presentation.rawValue] as! Int)
-             + (scores[ScoringCriterion.Viability.rawValue] as! Int)
+            + (scores[ScoringCriterion.Usability.rawValue] as! Int)
+            + (scores[ScoringCriterion.Presentation.rawValue] as! Int)
+            + (scores[ScoringCriterion.Viability.rawValue] as! Int)
     }
     
     func _dismissVC() {
@@ -149,13 +150,35 @@ class ScoringVC: UIViewController {
     
     @objc func submitScores(_ sender: UIButton) {
         let ref = Database.database().reference()
-        ref.child(teamsKey).child(String(teamInfo.teamId)).child(scoresKey).child(getUserPhoneNumber()).setValue(scores)
+        ref.child(scoresKey).child(String(teamInfo.teamId)).child(getUserPhoneNumber()).setValue(scores)
+        ref.child(judgedTeamsKey).child(getUserPhoneNumber()).childByAutoId().setValue(teamId)
+        functions.httpsCallable("removeAssignedTeam").call(["judgeId": getUserPhoneNumber(), "teamId": teamId]) { (result, error) in
+            if let error = error as NSError? {
+                if error.domain == FunctionsErrorDomain {
+                    //                    let code = FunctionsErrorCode(rawValue: error.code)
+                    //                    let message = error.localizedDescription
+                    let details = error.userInfo[FunctionsErrorDetailsKey]
+                    print("Error Remvoing Team: \(details)")
+                }
+            }
+//            else {
+//                self.functions.httpsCallable("assignTeams").call(["judgeId": getUserPhoneNumber()]) { (result, error) in
+//                    if let error = error as NSError? {
+//                        if error.domain == FunctionsErrorDomain {
+//                            let details = error.userInfo[FunctionsErrorDetailsKey]
+//                            print("Error Assigning New Team: \(details)")
+//                        }
+//                    }
+//                }
+//            }
+        }
+        
         _dismissVC()
     }
     
     func fetchPreviousScores() {
         let ref = Database.database().reference()
-        let scoresRef = ref.child(teamsKey).child(String(teamInfo.teamId)).child(scoresKey).child(getUserPhoneNumber())
+        let scoresRef = ref.child(scoresKey).child(String(teamInfo.teamId)).child(getUserPhoneNumber())
         scoresRef.observe(.value) { (snapshot) in
             if !snapshot.exists() { return }
             do {
@@ -232,6 +255,6 @@ extension ScoringVC {
     }
     
     @objc func onKeyboardDisappear(_ notification: NSNotification) {
-//        scoringTblVw.setContentOffset(oldTblVwOffset, animated: true)
+        //        scoringTblVw.setContentOffset(oldTblVwOffset, animated: true)
     }
 }

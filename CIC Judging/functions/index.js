@@ -15,34 +15,34 @@ const compare = (team1, team2) => {
 };
 
 const processAssignedQueue = (snapshot, judgeId) => {
+  console.log("Assigning teams", judgeId);
   if (snapshot.val() !== null) {
-    console.log(snapshot.val());
     const root = snapshot.val();
     var judge = root.judges[judgeId];
     var teams = root.teams;
     var judgingQueue = "judgingQueue" in root ? root.judgingQueue : {};
-
     var assignedTeams =
       "judgeAssigned" in judgingQueue ? judgingQueue.judgeAssigned : {};
-
     var judgeAssignedTeams =
       judgeId in judgingQueue ? judgingQueue[judgeId] : [];
+    const all_scores = "scores" in root ? root.scores : {};
 
     var filteredTeams = [];
     var preferredTeams = [];
+
     for (const teamID in teams) {
       const team = teams[teamID];
       const isPreferredTeam =
         judge.affinityGroup === "None"
           ? true
           : team.affinityGroup === judge.affinityGroup;
-      const team_scores = "scores" in team ? team.scores : {};
+
+      const team_scores = teamID in all_scores ? all_scores[teamID] : {};
       const isScored = judgeId in team_scores;
 
       if (isPreferredTeam && !isScored) {
         preferredTeams.push(teams[teamID]);
       }
-      console.log(teamID, assignedTeams, isPreferredTeam, isScored);
       if (!(teamID in assignedTeams) && isPreferredTeam && !isScored) {
         filteredTeams.push(teams[teamID]);
       }
@@ -50,15 +50,22 @@ const processAssignedQueue = (snapshot, judgeId) => {
 
     filteredTeams.sort(compare);
     preferredTeams.sort(compare);
+    // console.log("Filtered Teams ", filteredTeams);
+    // console.log("Preferred Teams: ", preferredTeams);
+    // console.log("Old Assigned Teams: ", judgeAssignedTeams);
 
     const teamsToAdd = 3 - judgeAssignedTeams.length;
     var teamsAdded = 0;
-
+    // // console.log("Will add", teamsAdded, "new teams");
     var i = 0;
-    console.log("Filtered teams: \n", filteredTeams);
     while (i < filteredTeams.length && teamsAdded < teamsToAdd) {
       const currTeamId = filteredTeams[i].teamId;
-      if (!judgeAssignedTeams.includes(currTeamId)) {
+      // // console.log("Finding team in filtered", currTeamId);
+      if (
+        !judgeAssignedTeams.includes(currTeamId) &&
+        currTeamId !== undefined
+      ) {
+        // // console.log("Assigning team", currTeamId);
         judgeAssignedTeams.push(currTeamId);
         assignedTeams[currTeamId] = judgeId;
         i++;
@@ -68,7 +75,12 @@ const processAssignedQueue = (snapshot, judgeId) => {
     i = 0;
     while (i < preferredTeams.length && teamsAdded < teamsToAdd) {
       const currTeamId = preferredTeams[i].teamId;
-      if (!judgeAssignedTeams.includes(currTeamId)) {
+      // // console.log("Finding team in preferred", currTeamId);
+      if (
+        !judgeAssignedTeams.includes(currTeamId) &&
+        currTeamId !== undefined
+      ) {
+        // // console.log("Assigning team", currTeamId);
         judgeAssignedTeams.push(currTeamId);
         assignedTeams[currTeamId] = judgeId;
         i++;
@@ -78,32 +90,87 @@ const processAssignedQueue = (snapshot, judgeId) => {
 
     judgingQueue[judgeId] = judgeAssignedTeams;
     judgingQueue.judgeAssigned = assignedTeams;
-
     var judgingQueueRef = admin.database().ref("judgingQueue");
     judgingQueueRef.set(judgingQueue);
-    console.log("SET: ", judgingQueue);
+    // console.log("ASSIGNED '", judgeId, "' TEAMS: ", judgingQueue);
     return { teams: judgeAssignedTeams };
   } else {
-    console.log("Root is empty");
+    // console.log("Root is empty");
     return { teams: [] };
   }
 };
 
+const reassignTeam = judgeId => {
+  cconsole.log("Reassigning team");
+  var db = admin.database();
+  var rootRef = db.ref("/");
+  rootRef
+    .once("value", snapshot => {
+      return processAssignedQueue(snapshot, judgeId);
+    })
+    .catch(function(error) {
+      console.log("Assigning new team after removing old team failed", error);
+    });
+};
+
+const filterAssignedQueue = (snapshot, judgeId, teamId) => {
+  if (snapshot.val() === null) {
+    return { teams: [] };
+  }
+  const root = snapshot.val();
+  var judgingQueue = "judgingQueue" in root ? root.judgingQueue : {};
+  var assignedTeams =
+    "judgeAssigned" in judgingQueue ? judgingQueue.judgeAssigned : {};
+  var judgeAssignedTeams = judgeId in judgingQueue ? judgingQueue[judgeId] : [];
+  delete assignedTeams[teamId];
+  judgeAssignedTeams = judgeAssignedTeams.filter(
+    filterTeamId => filterTeamId !== teamId
+  );
+  judgingQueue[judgeId] = judgeAssignedTeams;
+  judgingQueue.judgeAssigned = assignedTeams;
+  // console.log(judgingQueue);
+  var judgingQueueRef = admin.database().ref("judgingQueue");
+  judgingQueueRef
+    .set(judgingQueue)
+    .then(function() {
+      return reassignTeam(judgeId);
+    })
+    .catch(function(error) {
+      return { teams: [] };
+      // console.log("Removing Team ID failed:", error);
+    });
+  // console.log("Removed teamId ", teamId, "from judgeId ", judgeId, " queue.");
+};
+
 const displayError = errorObject => {
-  console.log("The read failed: " + errorObject.code);
+  // console.log("The read failed: " + errorObject.code);
   return { teams: [] };
 };
 
 exports.assignTeams = functions.https.onCall((data, context) => {
-  console.log("Running!");
   const judgeId = data.judgeId;
   var db = admin.database();
   var rootRef = db.ref("/");
   rootRef.once(
     "value",
     function(snapshot) {
-      console.log(snapshot.val());
       processAssignedQueue(snapshot, judgeId);
+    },
+    function(errorObject) {
+      displayError(errorObject);
+    }
+  );
+});
+
+exports.removeAssignedTeam = functions.https.onCall((data, context) => {
+  const judgeId = data.judgeId;
+  const teamId = data.teamId;
+  var db = admin.database();
+  var rootRef = db.ref("/");
+  rootRef.once(
+    "value",
+    function(snapshot) {
+      filterAssignedQueue(snapshot, judgeId, teamId);
     },
     function(errorObject) {
       displayError(errorObject);

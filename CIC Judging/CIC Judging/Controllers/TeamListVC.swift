@@ -84,38 +84,7 @@ class TeamListVC: UIViewController {
         affinityGroupName.textColor = .white
         affinityGroupName.font = headerFontRegular
         affinityGroupName.text = defaultAffinityGroupName
-        
-        
-        /*
-         
-         //Judged Count
-         let judgedCountTitle = UILabel()
-         headerView.addSubview(judgedCountTitle)
-         judgedCountTitle.translatesAutoresizingMaskIntoConstraints = false
-         NSLayoutConstraint.activate([
-         judgedCountTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-         judgedCountTitle.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
-         judgedCountTitle.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
-         judgedCountTitle.heightAnchor.constraint(equalToConstant: 20),
-         judgedCountTitle.widthAnchor.constraint(equalToConstant: 80)
-         ])
-         judgedCountTitle.textColor = .white
-         judgedCountTitle.text = "Judged:"
-         judgedCountTitle.font = headerFontBold
-         headerView.addSubview(judgedCount)
-         judgedCount.translatesAutoresizingMaskIntoConstraints = false
-         NSLayoutConstraint.activate([
-         judgedCount.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 10),
-         judgedCount.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20),
-         judgedCount.leadingAnchor.constraint(equalTo: judgedCountTitle.trailingAnchor),
-         judgedCount.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-         judgedCount.heightAnchor.constraint(equalToConstant: 20),
-         ])
-         judgedCount.textColor = .white
-         judgedCount.font = headerFontRegular
-         judgedCount.text = defaultJudgedCount
-         */
-        
+    
         //Judged Count
         headerView.addSubview(judgedCountBtn)
         judgedCountBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -134,8 +103,8 @@ class TeamListVC: UIViewController {
         judgedCountBtn.layer.borderColor = UIColor.white.cgColor
         judgedCountBtn.addTarget(self, action: #selector(showScoredTeamsList(_:)), for: .touchUpInside)
         let ref = Database.database().reference()
-        ref.child(judgesKey).child(getUserPhoneNumber()).child(judgedTeamsKey).observe(.value) { (snapshot) in
-            if let teamIds = snapshot.value as? [Int] {
+        ref.child(judgedTeamsKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
+            if let teamIds = snapshot.value as? [String: Int] {
                 self.judgedCountBtn.setTitle("Scored \(teamIds.count) Teams", for: .normal)
             } else {
                 self.judgedCountBtn.setTitle("Scored 0 Teams", for: .normal)
@@ -298,13 +267,12 @@ extension TeamListVC: UISearchBarDelegate {
 extension TeamListVC: UITableViewDataSource {
     
     func fetchTeamData() {
+        print("[TEAMS] Called fetch teams")
         let ref = Database.database().reference()
         
         functions.httpsCallable("assignTeams").call(["judgeId": getUserPhoneNumber()]) { (result, error) in
             if let error = error as NSError? {
                 if error.domain == FunctionsErrorDomain {
-                    let code = FunctionsErrorCode(rawValue: error.code)
-                    let message = error.localizedDescription
                     let details = error.userInfo[FunctionsErrorDetailsKey]
                     print("Error: \(details)")
                 }
@@ -313,6 +281,9 @@ extension TeamListVC: UITableViewDataSource {
         
         
         ref.child(judgingQueueKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
+            print("[TEAMS] Found new teams to score")
+            self.teams.removeAll()
+            self.filteredTeams.removeAll()
             guard let value = snapshot.value else { return }
             let teamIds = value as? [Int]
             if let teamIds = teamIds {
@@ -358,6 +329,7 @@ extension TeamListVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == filteredTeams.count { return }
         let teamInfo = filteredTeams[indexPath.row]
         let scoringVC = ScoringVC(previousVCType: .TeamListVC, teamId: teamInfo.teamId, teamInfo: teamInfo)
         present(scoringVC, animated: true, completion: nil)

@@ -58,8 +58,8 @@ class FilterTeamsVC: UIViewController {
         dismissBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
         dismissBtn.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
         NSLayoutConstraint.activate([
-            dismissBtn.heightAnchor.constraint(equalToConstant: 30),
-            dismissBtn.widthAnchor.constraint(equalToConstant: 30),
+            dismissBtn.heightAnchor.constraint(equalToConstant: 50),
+            dismissBtn.widthAnchor.constraint(equalToConstant: 50),
             dismissBtn.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
             dismissBtn.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
@@ -109,13 +109,13 @@ class FilterTeamsVC: UIViewController {
                 }
             }
         case .JudgedTeams:
-            ref.child(judgesKey).child(getUserPhoneNumber()).child(judgedTeamsKey).observe(.value) { (snapshot) in
+            ref.child(judgedTeamsKey).child(getUserPhoneNumber()).observe(.value) { (snapshot) in
 //                guard let value = snapshot.value else { return }
 //                let teamIds = value as? [Int]
                 self.teams.removeAll()
                 self.filteredTeams.removeAll()
-                if let teamIds = snapshot.value as? [Int] {
-                    for teamId in teamIds {
+                if let teamIds = snapshot.value as? [String: Int] {
+                    for (_, teamId) in teamIds {
                         ref.child(teamsKey).child(String(teamId)).observeSingleEvent(of: .value) { (snapshot) in
                             do {
                                 let value = snapshot.value
@@ -183,8 +183,9 @@ extension FilterTeamsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = filteredTeams[indexPath.row].teamName
-        cell.textLabel?.font = UIFont(name: robotoRegular, size: 13)
+        let team = filteredTeams[indexPath.row]
+        cell.textLabel?.text = "\(team.teamName) (Team ID: \(team.teamId))"
+        cell.textLabel?.font = UIFont(name: robotoRegular, size: 16)
         return cell
     }
     
