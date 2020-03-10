@@ -185,7 +185,9 @@ extension FilterTeamsVC: UITableViewDataSource {
         let cell = UITableViewCell()
         let team = filteredTeams[indexPath.row]
         cell.textLabel?.text = "\(team.teamName) (Team ID: \(team.teamId))"
-        cell.textLabel?.font = UIFont(name: robotoRegular, size: 16)
+        cell.textLabel?.font = contentFontRegular
+        cell.textLabel?.minimumScaleFactor = 0.6
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
         return cell
     }
     

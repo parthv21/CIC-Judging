@@ -56,6 +56,8 @@ func makeInfoHeaderView(view: UIView, headerVw: UIView, teamInfo: TeamData, tota
     projectNameLbl.text = teamInfo.teamName
     projectNameLbl.font = headerFontBoldBig
     projectNameLbl.textColor = .white
+    projectNameLbl.minimumScaleFactor = 0.6
+    projectNameLbl.adjustsFontSizeToFitWidth = true
     //Project Category
     let projectCategoryLbl = UILabel()
     teamDetailsStkVw.addArrangedSubview(projectCategoryLbl)
@@ -63,6 +65,8 @@ func makeInfoHeaderView(view: UIView, headerVw: UIView, teamInfo: TeamData, tota
     projectCategoryLbl.text = teamInfo.affinityGroup
     projectCategoryLbl.font = contentFontRegular
     projectCategoryLbl.textColor = .white
+    projectCategoryLbl.minimumScaleFactor = 0.6
+    projectCategoryLbl.adjustsFontSizeToFitWidth = true
     //Team ID
     let projectIDLbl = UILabel()
     teamDetailsStkVw.addArrangedSubview(projectIDLbl)
@@ -70,6 +74,8 @@ func makeInfoHeaderView(view: UIView, headerVw: UIView, teamInfo: TeamData, tota
     projectIDLbl.text = "Team ID: \(teamInfo.teamId)"
     projectIDLbl.font = contentFontRegular
     projectIDLbl.textColor = .white
+    projectIDLbl.minimumScaleFactor = 0.6
+    projectIDLbl.adjustsFontSizeToFitWidth = true
     //Score
     let totalScoreTitleLbl = UILabel()
     headerVw.addSubview(totalScoreTitleLbl)

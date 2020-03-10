@@ -157,6 +157,7 @@ class LoginVC: UIViewController {
         otpTxtFld.layer.borderWidth = 1
         otpTxtFld.layer.borderColor = UIColor.black.cgColor
         otpTxtFld.textAlignment = .center
+        otpTxtFld.keyboardType = .phonePad
         otpTxtFld.tag = inputTags.otp.rawValue
         otpTxtFld.textColor = .black
         NSLayoutConstraint.activate([

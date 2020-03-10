@@ -101,7 +101,7 @@ const processAssignedQueue = (snapshot, judgeId) => {
 };
 
 const reassignTeam = judgeId => {
-  cconsole.log("Reassigning team");
+  console.log("Reassigning team");
   var db = admin.database();
   var rootRef = db.ref("/");
   rootRef
@@ -110,6 +110,7 @@ const reassignTeam = judgeId => {
     })
     .catch(function(error) {
       console.log("Assigning new team after removing old team failed", error);
+      return { teams: [] };
     });
 };
 
@@ -133,6 +134,7 @@ const filterAssignedQueue = (snapshot, judgeId, teamId) => {
   judgingQueueRef
     .set(judgingQueue)
     .then(function() {
+      console.log("Setting new team");
       return reassignTeam(judgeId);
     })
     .catch(function(error) {

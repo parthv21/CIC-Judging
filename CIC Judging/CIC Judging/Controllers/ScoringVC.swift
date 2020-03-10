@@ -132,9 +132,10 @@ class ScoringVC: UIViewController {
     
     func _dismissVC() {
         if previousVCType == .FilterAllTeamsVC || previousVCType == .FilterJudgedTeamsVC {
-            presentingViewController?.view.isHidden = true
-            presentingViewController?.view.backgroundColor = .clear
-            presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            //presentingViewController?.view.isHidden = true
+            //presentingViewController?.view.backgroundColor = .clear
+            //presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         } else {
             dismiss(animated: true, completion: nil)
         }

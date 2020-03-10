@@ -93,10 +93,12 @@ class TeamListVC: UIViewController {
             judgedCountBtn.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 20),
             judgedCountBtn.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
             judgedCountBtn.heightAnchor.constraint(equalToConstant: 30),
-            judgedCountBtn.widthAnchor.constraint(equalToConstant: 150)
+            judgedCountBtn.widthAnchor.constraint(equalToConstant: 180)
         ])
         judgedCountBtn.setTitleColor(.white, for: .normal)
         judgedCountBtn.titleLabel?.font = headerFontRegular
+        judgedCountBtn.titleLabel?.minimumScaleFactor = 0.8
+        judgedCountBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         self.judgedCountBtn.setTitle("Scored 0 Teams", for: .normal)
         judgedCountBtn.layer.cornerRadius = 5
         judgedCountBtn.layer.borderWidth = 1
