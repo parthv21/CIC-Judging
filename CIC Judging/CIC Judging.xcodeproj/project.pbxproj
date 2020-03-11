@@ -19,6 +19,7 @@
 		B288282724114BA900DC6DCD /* TeamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282624114BA900DC6DCD /* TeamInfo.swift */; };
 		B28828292411508800DC6DCD /* TeamDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28828282411508800DC6DCD /* TeamDetailsVC.swift */; };
 		B288282B24115C8300DC6DCD /* FontMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282A24115C8300DC6DCD /* FontMaker.swift */; };
+		B2D697CC2418592C00D8CB61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2D697CB2418592C00D8CB61 /* GoogleService-Info.plist */; };
 		B2EDF60F240FF0F40081578A /* ScoringVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF60E240FF0F40081578A /* ScoringVC.swift */; };
 		B2EDF611241002290081578A /* ScoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF610241002290081578A /* ScoringCell.swift */; };
 		B2EDF61324100AE40081578A /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EDF61224100AE40081578A /* NotificationKeys.swift */; };
@@ -28,7 +29,6 @@
 		B2EEB331240873E10065C20E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB330240873E10065C20E /* LoginVC.swift */; };
 		B2EEB336240873E60065C20E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2EEB335240873E60065C20E /* Assets.xcassets */; };
 		B2EEB339240873E60065C20E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2EEB337240873E60065C20E /* LaunchScreen.storyboard */; };
-		B2EEB34324087B270065C20E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2EEB34224087B270065C20E /* GoogleService-Info.plist */; };
 		B2EEB34824097FEF0065C20E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB34724097FEF0065C20E /* Colors.swift */; };
 		B2EEB34A24098A880065C20E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEB34924098A880065C20E /* Fonts.swift */; };
 		B2EEB35824098B630065C20E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2EEB34C24098B610065C20E /* Roboto-ThinItalic.ttf */; };
@@ -66,6 +66,7 @@
 		B288282624114BA900DC6DCD /* TeamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfo.swift; sourceTree = "<group>"; };
 		B28828282411508800DC6DCD /* TeamDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsVC.swift; sourceTree = "<group>"; };
 		B288282A24115C8300DC6DCD /* FontMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontMaker.swift; sourceTree = "<group>"; };
+		B2D697CB2418592C00D8CB61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B2EDF60E240FF0F40081578A /* ScoringVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringVC.swift; sourceTree = "<group>"; };
 		B2EDF610241002290081578A /* ScoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringCell.swift; sourceTree = "<group>"; };
 		B2EDF61224100AE40081578A /* NotificationKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationKeys.swift; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		B2EEB335240873E60065C20E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2EEB338240873E60065C20E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2EEB33A240873E60065C20E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2EEB34224087B270065C20E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B2EEB34524087ECF0065C20E /* CIC Judging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CIC Judging.entitlements"; sourceTree = "<group>"; };
 		B2EEB34724097FEF0065C20E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B2EEB34924098A880065C20E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 		B2EEB320240873E10065C20E = {
 			isa = PBXGroup;
 			children = (
-				B2EEB34224087B270065C20E /* GoogleService-Info.plist */,
+				B2D697CB2418592C00D8CB61 /* GoogleService-Info.plist */,
 				B2EEB32B240873E10065C20E /* CIC Judging */,
 				B2EEB32A240873E10065C20E /* Products */,
 				B75AF0C435F6E0DAE1396F49 /* Pods */,
@@ -328,6 +328,7 @@
 				B2EEB36324098B630065C20E /* Roboto-Bold.ttf in Resources */,
 				B2EEB36124098B630065C20E /* Roboto-MediumItalic.ttf in Resources */,
 				B2EEB36024098B630065C20E /* Roboto-LightItalic.ttf in Resources */,
+				B2D697CC2418592C00D8CB61 /* GoogleService-Info.plist in Resources */,
 				B2EEB35E24098B630065C20E /* Roboto-Light.ttf in Resources */,
 				B2EEB339240873E60065C20E /* LaunchScreen.storyboard in Resources */,
 				B2EEB35F24098B630065C20E /* Roboto-Thin.ttf in Resources */,
@@ -335,7 +336,6 @@
 				B2EEB35924098B630065C20E /* Roboto-Regular.ttf in Resources */,
 				B2EEB35B24098B630065C20E /* Roboto-Italic.ttf in Resources */,
 				B2EEB336240873E60065C20E /* Assets.xcassets in Resources */,
-				B2EEB34324087B270065C20E /* GoogleService-Info.plist in Resources */,
 				B2EEB36224098B630065C20E /* Roboto-BoldItalic.ttf in Resources */,
 				B2EEB35D24098B630065C20E /* Roboto-Medium.ttf in Resources */,
 			);
@@ -377,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion \" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 		D4F2AA6F3846D9BBB0076A1F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -572,13 +572,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CIC Judging/CIC Judging.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U4985LT7P8;
 				INFOPLIST_FILE = "CIC Judging/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.parthtamane.CIC-Judging";
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.gatech.rnoc.cic-judging";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -592,13 +594,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CIC Judging/CIC Judging.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U4985LT7P8;
 				INFOPLIST_FILE = "CIC Judging/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.parthtamane.CIC-Judging";
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.gatech.rnoc.cic-judging";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
