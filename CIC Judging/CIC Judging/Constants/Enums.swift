@@ -29,3 +29,8 @@ enum ScoringCriterion: String {
     case Notes = "notes"
 }
 
+enum MessagePrioirty: String {
+    case Low = "Low"
+    case Medium = "Medium"
+    case High = "High"
+}

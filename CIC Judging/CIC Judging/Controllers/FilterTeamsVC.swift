@@ -30,41 +30,47 @@ class FilterTeamsVC: UIViewController {
     }
     
     func addHeader() {
-        view.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-        //Title
-        let titleLbl = UILabel()
-        headerView.addSubview(titleLbl)
-        titleLbl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleLbl.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
-            titleLbl.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
-            titleLbl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            titleLbl.heightAnchor.constraint(equalToConstant: 40),
-            titleLbl.widthAnchor.constraint(equalToConstant: 150)
-        ])
-        titleLbl.text = filterVCType.rawValue
-        titleLbl.textColor = .black
-        titleLbl.font = UIFont(name: robotoBold, size: 18)
+                
+//        view.addSubview(headerView)
+//        headerView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+//        ])
+//        //Title
+//        let titleLbl = UILabel()
+//        headerView.addSubview(titleLbl)
+//        titleLbl.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            titleLbl.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
+//            titleLbl.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+//            titleLbl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+//            titleLbl.heightAnchor.constraint(equalToConstant: 40),
+//            titleLbl.widthAnchor.constraint(equalToConstant: 150)
+//        ])
+//        titleLbl.text = filterVCType.rawValue
+//        titleLbl.textColor = .black
+//        titleLbl.font = UIFont(name: robotoBold, size: 18)
+
         //Dismiss Button
         let dismissBtn = UIButton()
-        headerView.addSubview(dismissBtn)
-        dismissBtn.translatesAutoresizingMaskIntoConstraints = false
-        dismissBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
-        dismissBtn.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
-        NSLayoutConstraint.activate([
-            dismissBtn.heightAnchor.constraint(equalToConstant: 50),
-            dismissBtn.widthAnchor.constraint(equalToConstant: 50),
-            dismissBtn.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
-            dismissBtn.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
-        ])
-        dismissBtn.setTitleColor(.black, for: .normal)
         dismissBtn.addTarget(self, action: #selector(dismissVC(_:)), for: .touchUpInside)
+        makeListHeader(view: view, headerVw: headerView, title: filterVCType.rawValue, dismissBtn: dismissBtn)
+//
+//
+//        headerView.addSubview(dismissBtn)
+//        dismissBtn.translatesAutoresizingMaskIntoConstraints = false
+//        dismissBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
+//        dismissBtn.setTitle(String.fontAwesomeIcon(name: .timesCircle), for: .normal)
+//        NSLayoutConstraint.activate([
+//            dismissBtn.heightAnchor.constraint(equalToConstant: 50),
+//            dismissBtn.widthAnchor.constraint(equalToConstant: 50),
+//            dismissBtn.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
+//            dismissBtn.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
+//        ])
+//        dismissBtn.setTitleColor(.black, for: .normal)
+//        dismissBtn.addTarget(self, action: #selector(dismissVC(_:)), for: .touchUpInside)
     }
     
     func addSearchBar() {

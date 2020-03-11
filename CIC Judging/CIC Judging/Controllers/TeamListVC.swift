@@ -12,7 +12,7 @@ import Firebase
 
 class TeamListVC: UIViewController {
     
-    private let headerView = UIView()
+    private let headerVw = UIView()
     private let judgeNameLbl = UILabel()
     private let defaultJudegName = "Jon Doe"
     private let affinityGroupName = UILabel()
@@ -27,18 +27,18 @@ class TeamListVC: UIViewController {
     private  let titleLbl = UILabel()
     private lazy var functions = Functions.functions()
     
-    func makeHeaderView() {
+    func makeheaderView() {
         //Header
-        view.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerVw)
+        headerVw.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerVw.topAnchor.constraint(equalTo: view.topAnchor),
+            headerVw.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerVw.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        headerView.backgroundColor = techGold
+        headerVw.backgroundColor = techGold
         //Judge Name
-        headerView.addSubview(judgeNameLbl)
+        headerVw.addSubview(judgeNameLbl)
         judgeNameLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             judgeNameLbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -51,7 +51,7 @@ class TeamListVC: UIViewController {
         judgeNameLbl.text = defaultJudegName
         //Seperator
         let seperator = UIView()
-        headerView.addSubview(seperator)
+        headerVw.addSubview(seperator)
         seperator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             seperator.topAnchor.constraint(equalTo: judgeNameLbl.bottomAnchor, constant: 10),
@@ -62,7 +62,7 @@ class TeamListVC: UIViewController {
         seperator.backgroundColor = .white
         //Affinity group
         let affinityGroupTitle = UILabel()
-        headerView.addSubview(affinityGroupTitle)
+        headerVw.addSubview(affinityGroupTitle)
         affinityGroupTitle.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             affinityGroupTitle.topAnchor.constraint(equalTo: seperator.bottomAnchor, constant: 20),
@@ -73,7 +73,7 @@ class TeamListVC: UIViewController {
         affinityGroupTitle.textColor = .white
         affinityGroupTitle.text = "Affinity:"
         affinityGroupTitle.font = headerFontBold
-        headerView.addSubview(affinityGroupName)
+        headerVw.addSubview(affinityGroupName)
         affinityGroupName.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             affinityGroupName.topAnchor.constraint(equalTo: seperator.bottomAnchor, constant: 20),
@@ -86,12 +86,12 @@ class TeamListVC: UIViewController {
         affinityGroupName.text = defaultAffinityGroupName
     
         //Judged Count
-        headerView.addSubview(judgedCountBtn)
+        headerVw.addSubview(judgedCountBtn)
         judgedCountBtn.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             judgedCountBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             judgedCountBtn.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 20),
-            judgedCountBtn.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            judgedCountBtn.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
             judgedCountBtn.heightAnchor.constraint(equalToConstant: 30),
             judgedCountBtn.widthAnchor.constraint(equalToConstant: 180)
         ])
@@ -112,6 +112,20 @@ class TeamListVC: UIViewController {
                 self.judgedCountBtn.setTitle("Scored 0 Teams", for: .normal)
             }
         }
+        //Messages button
+        let messagesButton = UIButton()
+        headerVw.addSubview(messagesButton)
+        messagesButton.translatesAutoresizingMaskIntoConstraints = false
+        messagesButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
+        messagesButton.setTitle(String.fontAwesomeIcon(name: .bell), for: .normal)
+        NSLayoutConstraint.activate([
+            messagesButton.heightAnchor.constraint(equalToConstant: 30),
+            messagesButton.widthAnchor.constraint(equalToConstant: 50),
+            messagesButton.leadingAnchor.constraint(equalTo: judgedCountBtn.trailingAnchor, constant: 10),
+            messagesButton.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
+        ])
+        messagesButton.setTitleColor(.white, for: .normal)
+        messagesButton.addTarget(self, action: #selector(showMessages(_:)), for: .touchUpInside)
         
         //Log Out
         let logOutBtn = UIButton()
@@ -125,7 +139,7 @@ class TeamListVC: UIViewController {
         NSLayoutConstraint.activate([
             logOutBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             logOutBtn.topAnchor.constraint(equalTo: affinityGroupTitle.bottomAnchor, constant: 20),
-            logOutBtn.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            logOutBtn.bottomAnchor.constraint(equalTo: headerVw.bottomAnchor, constant: -10),
             logOutBtn.widthAnchor.constraint(equalToConstant: 80),
             logOutBtn.heightAnchor.constraint(equalToConstant: 30)
         ])
@@ -173,7 +187,7 @@ class TeamListVC: UIViewController {
         view.addSubview(titleLbl)
         titleLbl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLbl.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            titleLbl.topAnchor.constraint(equalTo: headerVw.bottomAnchor),
             titleLbl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             titleLbl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             titleLbl.heightAnchor.constraint(equalToConstant: 40)
@@ -208,7 +222,7 @@ class TeamListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        makeHeaderView()
+        makeheaderView()
         setHeaderGroupLabels()
         addVCTitle()
         addTeamListTblVw()
@@ -239,6 +253,11 @@ class TeamListVC: UIViewController {
     @objc func showScoredTeamsList(_ sender: UIButton) {
         let judgedTeamsListVC = FilterTeamsVC(filterVCType: .JudgedTeams)
         present(judgedTeamsListVC, animated: true)
+    }
+    
+    @objc func showMessages(_ sender: UIButton) {
+        let messagesVC = NotificationVC()
+        present(messagesVC, animated: true)
     }
 }
 

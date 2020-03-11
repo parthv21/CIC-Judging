@@ -29,3 +29,9 @@ struct ScoresData: Codable {
     let viability: Int
     let notes: String
 }
+
+struct MessageData: Codable {
+    let timestamp: String
+    let message: String
+    let priority: String
+}

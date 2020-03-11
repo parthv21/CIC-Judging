@@ -16,6 +16,11 @@
 		B2278109240C50C500890DC3 /* DBKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2278108240C50C500890DC3 /* DBKeys.swift */; };
 		B227810B240C606000890DC3 /* Decodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810A240C606000890DC3 /* Decodables.swift */; };
 		B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227810D240C815E00890DC3 /* TeamInfoCell.swift */; };
+		B25246DA241882BE00E8603C /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246D9241882BE00E8603C /* NotificationsVC.swift */; };
+		B25246DC241882E800E8603C /* ListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246DB241882E800E8603C /* ListHeader.swift */; };
+		B25246DE24188D4600E8603C /* CellIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246DD24188D4600E8603C /* CellIdentifiers.swift */; };
+		B25246E024188DBB00E8603C /* MessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246DF24188DBB00E8603C /* MessagesCell.swift */; };
+		B25246E22418995600E8603C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246E12418995600E8603C /* DateParser.swift */; };
 		B288282724114BA900DC6DCD /* TeamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282624114BA900DC6DCD /* TeamInfo.swift */; };
 		B28828292411508800DC6DCD /* TeamDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28828282411508800DC6DCD /* TeamDetailsVC.swift */; };
 		B288282B24115C8300DC6DCD /* FontMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282A24115C8300DC6DCD /* FontMaker.swift */; };
@@ -63,6 +68,11 @@
 		B2278108240C50C500890DC3 /* DBKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBKeys.swift; sourceTree = "<group>"; };
 		B227810A240C606000890DC3 /* Decodables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodables.swift; sourceTree = "<group>"; };
 		B227810D240C815E00890DC3 /* TeamInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoCell.swift; sourceTree = "<group>"; };
+		B25246D9241882BE00E8603C /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
+		B25246DB241882E800E8603C /* ListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeader.swift; sourceTree = "<group>"; };
+		B25246DD24188D4600E8603C /* CellIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiers.swift; sourceTree = "<group>"; };
+		B25246DF24188DBB00E8603C /* MessagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCell.swift; sourceTree = "<group>"; };
+		B25246E12418995600E8603C /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
 		B288282624114BA900DC6DCD /* TeamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfo.swift; sourceTree = "<group>"; };
 		B28828282411508800DC6DCD /* TeamDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsVC.swift; sourceTree = "<group>"; };
 		B288282A24115C8300DC6DCD /* FontMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontMaker.swift; sourceTree = "<group>"; };
@@ -135,6 +145,7 @@
 				B227810D240C815E00890DC3 /* TeamInfoCell.swift */,
 				B2EDF610241002290081578A /* ScoringCell.swift */,
 				B2EDF614241017190081578A /* NotesCell.swift */,
+				B25246DF24188DBB00E8603C /* MessagesCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -185,6 +196,7 @@
 				B2191AA1240EC418005E57CD /* FilterTeamsVC.swift */,
 				B2EDF60E240FF0F40081578A /* ScoringVC.swift */,
 				B28828282411508800DC6DCD /* TeamDetailsVC.swift */,
+				B25246D9241882BE00E8603C /* NotificationsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -208,6 +220,7 @@
 				B227810A240C606000890DC3 /* Decodables.swift */,
 				B2191AA3240EC53A005E57CD /* Enums.swift */,
 				B2EDF61224100AE40081578A /* NotificationKeys.swift */,
+				B25246DD24188D4600E8603C /* CellIdentifiers.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -240,6 +253,7 @@
 				B2191A9F240EAE11005E57CD /* KeyMaker.swift */,
 				B2191AA8240EF7DC005E57CD /* AssetsFetcher.swift */,
 				B288282A24115C8300DC6DCD /* FontMaker.swift */,
+				B25246E12418995600E8603C /* DateParser.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -249,6 +263,7 @@
 			children = (
 				B2EEB368240A25F80065C20E /* Alerts.swift */,
 				B288282624114BA900DC6DCD /* TeamInfo.swift */,
+				B25246DB241882E800E8603C /* ListHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -409,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2191AA9240EF7DC005E57CD /* AssetsFetcher.swift in Sources */,
+				B25246DA241882BE00E8603C /* NotificationsVC.swift in Sources */,
 				B2EEB331240873E10065C20E /* LoginVC.swift in Sources */,
 				B2EEB36B240A2B520065C20E /* RefCheckers.swift in Sources */,
 				B2EEB36D240A2FBB0065C20E /* TeamListVC.swift in Sources */,
@@ -421,17 +437,21 @@
 				B2EEB366240A1C650065C20E /* Validators.swift in Sources */,
 				B2EDF61324100AE40081578A /* NotificationKeys.swift in Sources */,
 				B2191AA2240EC418005E57CD /* FilterTeamsVC.swift in Sources */,
+				B25246DE24188D4600E8603C /* CellIdentifiers.swift in Sources */,
 				B2EEB34824097FEF0065C20E /* Colors.swift in Sources */,
 				B2EEB32D240873E10065C20E /* AppDelegate.swift in Sources */,
 				B2EDF611241002290081578A /* ScoringCell.swift in Sources */,
 				B2278109240C50C500890DC3 /* DBKeys.swift in Sources */,
+				B25246E024188DBB00E8603C /* MessagesCell.swift in Sources */,
 				B227810E240C815E00890DC3 /* TeamInfoCell.swift in Sources */,
 				B227810B240C606000890DC3 /* Decodables.swift in Sources */,
 				B2EDF60F240FF0F40081578A /* ScoringVC.swift in Sources */,
 				B28828292411508800DC6DCD /* TeamDetailsVC.swift in Sources */,
 				B288282724114BA900DC6DCD /* TeamInfo.swift in Sources */,
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
+				B25246DC241882E800E8603C /* ListHeader.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,
+				B25246E22418995600E8603C /* DateParser.swift in Sources */,
 				B2191AA0240EAE11005E57CD /* KeyMaker.swift in Sources */,
 				B288282B24115C8300DC6DCD /* FontMaker.swift in Sources */,
 			);
