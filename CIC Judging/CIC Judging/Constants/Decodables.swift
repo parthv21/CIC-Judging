@@ -35,3 +35,8 @@ struct MessageData: Codable {
     let message: String
     let priority: String
 }
+
+struct ConfigurationData: Codable {
+    let allowEdits: Int
+    let allowSubmissions: Int
+}

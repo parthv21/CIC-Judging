@@ -207,10 +207,24 @@ extension FilterTeamsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let currentVCType: VCType = filterVCType == .AllTeams ? .FilterAllTeamsVC : .FilterJudgedTeamsVC
         let teamInfo = filteredTeams[indexPath.row]
         let scoringVC = ScoringVC(previousVCType: currentVCType, teamId: teamInfo.teamId, teamInfo: teamInfo)
-        present(scoringVC, animated: true, completion: nil)
+        
+        let isTeamScored = JudgedTeams.shared.judgedTeamIds.contains(filteredTeams[indexPath.row].teamId)
+        
+        if isTeamScored && AppConfigurations.shared.appConfigurations.allowEdits == 0 {
+            let scoreEditingClosedAlrt = makeScoreEditingClosedAlert {
+                self.present(scoringVC, animated: true, completion: nil)
+            }
+            present(scoreEditingClosedAlrt, animated: true, completion: nil)
+        } else if !isTeamScored && AppConfigurations.shared.appConfigurations.allowSubmissions == 0 {
+            let scoreSubmissionsClosedAlrt = makeSubmissionClosedAlert {}
+            present(scoreSubmissionsClosedAlrt, animated: true, completion: nil)
+        } else {
+            present(scoringVC, animated: true, completion: nil)
+        }
     }
 }
 

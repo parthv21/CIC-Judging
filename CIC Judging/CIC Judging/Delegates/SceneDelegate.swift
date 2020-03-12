@@ -33,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let user = Auth.auth().currentUser
+        let _ = AppConfigurations.shared
         if user != nil {
             window?.rootViewController = TeamListVC()
         } else {

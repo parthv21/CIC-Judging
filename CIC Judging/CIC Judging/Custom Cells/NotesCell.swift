@@ -11,6 +11,7 @@ import UIKit
 
 class NotesCell: UITableViewCell {
     internal let notesTxtArea = UITextView()
+    private var teamId = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,7 +65,14 @@ class NotesCell: UITableViewCell {
         notesTxtArea.endEditing(true)
     }
     
-    func configureCell(noteText: String) {
+    func configureCell(noteText: String, teamId: Int) {
+        self.teamId = teamId
+        let isTeamScored = JudgedTeams.shared.judgedTeamIds.contains(teamId)
+        let disallowEdits = isTeamScored && AppConfigurations.shared.appConfigurations.allowEdits == 0 || AppConfigurations.shared.appConfigurations.allowSubmissions == 0
+        if disallowEdits {
+            notesTxtArea.isEditable = false
+        }
+        
         self.notesTxtArea.text = noteText
     }
     

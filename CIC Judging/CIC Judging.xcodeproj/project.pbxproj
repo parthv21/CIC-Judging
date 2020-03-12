@@ -21,6 +21,8 @@
 		B25246DE24188D4600E8603C /* CellIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246DD24188D4600E8603C /* CellIdentifiers.swift */; };
 		B25246E024188DBB00E8603C /* MessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246DF24188DBB00E8603C /* MessagesCell.swift */; };
 		B25246E22418995600E8603C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25246E12418995600E8603C /* DateParser.swift */; };
+		B25C31AD2419F0CD008D099F /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C31AC2419F0CD008D099F /* AppConfigurations.swift */; };
+		B25C31B02419F376008D099F /* JudgedTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C31AF2419F376008D099F /* JudgedTeams.swift */; };
 		B288282724114BA900DC6DCD /* TeamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282624114BA900DC6DCD /* TeamInfo.swift */; };
 		B28828292411508800DC6DCD /* TeamDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28828282411508800DC6DCD /* TeamDetailsVC.swift */; };
 		B288282B24115C8300DC6DCD /* FontMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B288282A24115C8300DC6DCD /* FontMaker.swift */; };
@@ -73,6 +75,8 @@
 		B25246DD24188D4600E8603C /* CellIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiers.swift; sourceTree = "<group>"; };
 		B25246DF24188DBB00E8603C /* MessagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCell.swift; sourceTree = "<group>"; };
 		B25246E12418995600E8603C /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
+		B25C31AC2419F0CD008D099F /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
+		B25C31AF2419F376008D099F /* JudgedTeams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JudgedTeams.swift; sourceTree = "<group>"; };
 		B288282624114BA900DC6DCD /* TeamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfo.swift; sourceTree = "<group>"; };
 		B28828282411508800DC6DCD /* TeamDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsVC.swift; sourceTree = "<group>"; };
 		B288282A24115C8300DC6DCD /* FontMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontMaker.swift; sourceTree = "<group>"; };
@@ -150,6 +154,15 @@
 			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
+		B25C31AE2419F335008D099F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B25C31AC2419F0CD008D099F /* AppConfigurations.swift */,
+				B25C31AF2419F376008D099F /* JudgedTeams.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B2EEB320240873E10065C20E = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +189,7 @@
 				B2191AA5240EF6A7005E57CD /* Fetched Data */,
 				B227810C240C812D00890DC3 /* Custom Cells */,
 				B2EEB364240A1C410065C20E /* Utils */,
+				B25C31AE2419F335008D099F /* Model */,
 				B2EEB367240A25DF0065C20E /* Views */,
 				B2EEB341240878030065C20E /* Delegates */,
 				B2EEB34624097FC70065C20E /* Constants */,
@@ -451,8 +465,10 @@
 				B2EEB369240A25F80065C20E /* Alerts.swift in Sources */,
 				B25246DC241882E800E8603C /* ListHeader.swift in Sources */,
 				B2EEB32F240873E10065C20E /* SceneDelegate.swift in Sources */,
+				B25C31B02419F376008D099F /* JudgedTeams.swift in Sources */,
 				B25246E22418995600E8603C /* DateParser.swift in Sources */,
 				B2191AA0240EAE11005E57CD /* KeyMaker.swift in Sources */,
+				B25C31AD2419F0CD008D099F /* AppConfigurations.swift in Sources */,
 				B288282B24115C8300DC6DCD /* FontMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

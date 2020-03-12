@@ -16,6 +16,7 @@ class ScoringCell: UITableViewCell {
     private let scoreLbl = UILabel()
     private let scoringBtnStkVw = UIStackView()
     private var score = 1
+    private var teamId = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -99,7 +100,8 @@ class ScoringCell: UITableViewCell {
         return scoreBtn
     }
     
-    func configureCell(scoringCriterion: ScoringCriterion, initialScore: Int) {
+    func configureCell(scoringCriterion: ScoringCriterion, initialScore: Int, teamId: Int) {
+        self.teamId = teamId
         self.scoringCriterion = scoringCriterion
         self.score = initialScore
         self.scoringCriterionTitleLbl.text = self.scoringCriterion.rawValue.capitalized
@@ -108,13 +110,19 @@ class ScoringCell: UITableViewCell {
     }
     
     @objc func broadcastScore(_ sender: UIButton) {
-        let newScore = sender.tag
-        scoringBtnStkVw.viewWithTag(score)?.backgroundColor = .clear
-        scoringBtnStkVw.viewWithTag(newScore)?.backgroundColor = techGold
-        score = newScore
-        scoreLbl.text = "\(newScore)/5"
-        let notificationName = NSNotification.Name(rawValue: scoreUpdateNotificationKey)
-        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [scoringCriterion.rawValue: newScore])
+        
+        let isTeamScored = JudgedTeams.shared.judgedTeamIds.contains(teamId)
+        let disallowEdits = isTeamScored && AppConfigurations.shared.appConfigurations.allowEdits == 0 || AppConfigurations.shared.appConfigurations.allowSubmissions == 0
+        
+        if !disallowEdits {
+            let newScore = sender.tag
+            scoringBtnStkVw.viewWithTag(score)?.backgroundColor = .clear
+            scoringBtnStkVw.viewWithTag(newScore)?.backgroundColor = techGold
+            score = newScore
+            scoreLbl.text = "\(newScore)/5"
+            let notificationName = NSNotification.Name(rawValue: scoreUpdateNotificationKey)
+            NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [scoringCriterion.rawValue: newScore])
+        }
     }
     
     required init?(coder: NSCoder) {

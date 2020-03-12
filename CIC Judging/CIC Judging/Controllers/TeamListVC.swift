@@ -240,7 +240,7 @@ class TeamListVC: UIViewController {
             prefs.removeObject(forKey: hasRunBefore)
             
         } catch let signOutError as NSError {
-            let signOutErrorAlrt = makeAlert(title: "Sign Out Error", message: signOutError.localizedDescription)
+            let signOutErrorAlrt = makeAlert(title: "Sign Out Error", message: signOutError.localizedDescription, callback: {})
             present(signOutErrorAlrt, animated: true, completion: nil)
         }
     }
@@ -352,7 +352,13 @@ extension TeamListVC: UITableViewDataSource {
         if indexPath.row == filteredTeams.count { return }
         let teamInfo = filteredTeams[indexPath.row]
         let scoringVC = ScoringVC(previousVCType: .TeamListVC, teamId: teamInfo.teamId, teamInfo: teamInfo)
-        present(scoringVC, animated: true, completion: nil)
+        print("Configurations: \(AppConfigurations.shared.appConfigurations)")
+        if AppConfigurations.shared.appConfigurations.allowSubmissions == 0{
+            let submissionsClosedAlrt = makeSubmissionClosedAlert {}
+            self.present(submissionsClosedAlrt, animated: true, completion: nil)
+        } else {
+            present(scoringVC, animated: true, completion: nil)
+        }
     }
 }
 

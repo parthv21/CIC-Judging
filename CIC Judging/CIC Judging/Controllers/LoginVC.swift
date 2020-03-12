@@ -230,13 +230,14 @@ class LoginVC: UIViewController {
         let isValid = validatePhoneNumber(phoneNumber)
         
         if !isValid {
-            let invalidInputAlrt = makeAlert(title: "Invalid Input", message: "Please check the phone number you entered for errors.")
+            let invalidInputAlrt = makeAlert(title: "Invalid Input", message: "Please check the phone number you entered for errors.") {}
+            
             self.present(invalidInputAlrt, animated: true, completion:nil)
         } else {
             
             checkIfUserRegistred(phoneNumber: String(phoneNumber.suffix(10))) { registred in
                 if !registred {
-                    let missedRegistrationAlrt = makeAlert(title: "Not Registered", message: "Please go to the front desk and register yourself before trying to login.")
+                    let missedRegistrationAlrt = makeAlert(title: "Not Registered", message: "Please go to the front desk and register yourself before trying to login.") {}
                     self.present(missedRegistrationAlrt, animated: true, completion:nil)
                 } else {
                     if phoneNumber.count == 10 {
@@ -244,7 +245,7 @@ class LoginVC: UIViewController {
                     }
                     PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationID, error) in
                         if let error = error {
-                            let authErrorAlrt = makeAlert(title: "Authentication Error", message: error.localizedDescription)
+                            let authErrorAlrt = makeAlert(title: "Authentication Error", message: error.localizedDescription) {}
                             self.present(authErrorAlrt, animated: true, completion: nil)
                             return
                         } else {
@@ -271,7 +272,7 @@ class LoginVC: UIViewController {
         
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
-                let loginErrorAlrt = makeAlert(title: "Login Error", message: error.localizedDescription)
+                let loginErrorAlrt = makeAlert(title: "Login Error", message: error.localizedDescription) {}
                 self.present(loginErrorAlrt, animated: true, completion: nil)
                 return
             }

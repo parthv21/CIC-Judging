@@ -151,31 +151,29 @@ class ScoringVC: UIViewController {
     }
     
     @objc func submitScores(_ sender: UIButton) {
-        let ref = Database.database().reference()
-        ref.child(scoresKey).child(String(teamInfo.teamId)).child(getUserPhoneNumber()).setValue(scores)
-        ref.child(judgedTeamsKey).child(getUserPhoneNumber()).childByAutoId().setValue(teamId)
-        functions.httpsCallable("removeAssignedTeam").call(["judgeId": getUserPhoneNumber(), "teamId": teamId]) { (result, error) in
-            if let error = error as NSError? {
-                if error.domain == FunctionsErrorDomain {
-                    //                    let code = FunctionsErrorCode(rawValue: error.code)
-                    //                    let message = error.localizedDescription
-                    let details = error.userInfo[FunctionsErrorDetailsKey]
-                    print("Error Remvoing Team: \(details)")
+        
+        let isTeamScored = JudgedTeams.shared.judgedTeamIds.contains(teamInfo.teamId)
+        
+        if isTeamScored && AppConfigurations.shared.appConfigurations.allowEdits == 0 {
+            let editingClosedAlrt = makeScoreEditingClosedAlert {}
+            present(editingClosedAlrt, animated: true, completion: nil)
+        } else if !isTeamScored && AppConfigurations.shared.appConfigurations.allowSubmissions == 0 {
+            let submissionsClosedAlrt = makeSubmissionClosedAlert {}
+            present(submissionsClosedAlrt, animated: true, completion: nil)
+        } else {
+            let ref = Database.database().reference()
+            ref.child(scoresKey).child(String(teamInfo.teamId)).child(getUserPhoneNumber()).setValue(scores)
+            ref.child(judgedTeamsKey).child(getUserPhoneNumber()).childByAutoId().setValue(teamId)
+            functions.httpsCallable("removeAssignedTeam").call(["judgeId": getUserPhoneNumber(), "teamId": teamId]) { (result, error) in
+                if let error = error as NSError? {
+                    if error.domain == FunctionsErrorDomain {
+                        let details = error.userInfo[FunctionsErrorDetailsKey]
+                        print("Error Remvoing Team: \(details)")
+                    }
                 }
             }
-//            else {
-//                self.functions.httpsCallable("assignTeams").call(["judgeId": getUserPhoneNumber()]) { (result, error) in
-//                    if let error = error as NSError? {
-//                        if error.domain == FunctionsErrorDomain {
-//                            let details = error.userInfo[FunctionsErrorDetailsKey]
-//                            print("Error Assigning New Team: \(details)")
-//                        }
-//                    }
-//                }
-//            }
+            _dismissVC()
         }
-        
-        _dismissVC()
     }
     
     func fetchPreviousScores() {
@@ -219,12 +217,12 @@ extension ScoringVC: UITableViewDataSource {
         
         if indexPath.row < 4 {
             let scoringCell = ScoringCell()
-            scoringCell.configureCell(scoringCriterion: scoringCriterionList[indexPath.row], initialScore: scores[scoringCriterionList[indexPath.row].rawValue] as? Int ?? 1)
+            scoringCell.configureCell(scoringCriterion: scoringCriterionList[indexPath.row], initialScore: scores[scoringCriterionList[indexPath.row].rawValue] as? Int ?? 1, teamId: teamId)
             return scoringCell
         } else if indexPath.row == 4 {
             //Notes Cell
             let notesCell = NotesCell()
-            notesCell.configureCell(noteText: scores[ScoringCriterion.Notes.rawValue] as? String ?? "")
+            notesCell.configureCell(noteText: scores[ScoringCriterion.Notes.rawValue] as? String ?? "", teamId: teamId)
             return notesCell
         } else if indexPath.row == 5 {
             //Submit Cell
@@ -246,10 +244,6 @@ extension ScoringVC: UITableViewDelegate {
             view.endEditing(true)
         }
     }
-    
-//    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-//        isKeyboardVisible = true
-//    }
 }
 
 //MARK:- Handling text fields hidden by keyboard
