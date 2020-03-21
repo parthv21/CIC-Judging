@@ -13,6 +13,7 @@ The app will help the judges in:
 To learn more about Convergence Innovation Competition, please visit the following link:<br>
 http://www.cic.gatech.edu
 
+
 <div style="display: flex;">
 <img src="https://drive.google.com/uc?export=view&id=1RZlMvWjcPD_xJCp4RIEclV--XX4d9wrr" height=400  alt="login page"/>
 <img src="https://drive.google.com/uc?export=view&id=1ZXnFRDxpNcTv2r9665SHIaWB7RYp-zRp" height=400  alt="dashboard"/>
